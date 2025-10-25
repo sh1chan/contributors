@@ -1,0 +1,7 @@
+[project]
+name = "contributors"
+version = "0.1.0"
+description = "Web App to find projects / issues to (team-up and) contribute"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
