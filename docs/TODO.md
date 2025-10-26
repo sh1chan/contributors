@@ -22,8 +22,13 @@ v0.1.0
 ### Routers
 - [ ] Auth
     - [ ] /register
+        - [ ] `GET`
+        - [ ] `POST`
     - [ ] /login
+        - [ ] `GET`
+        - [ ] `POST`
     - [ ] /logoug
+        - [ ] `POST`
     - [ ] /
     - [ ] /update
     - [ ] /delete
@@ -38,14 +43,18 @@ v0.1.0
     - [ ] /{id}/delete
 - [ ] Projects
     - [ ] /
+        - [ ] `GET`
     - [ ] /create
     - [ ] /{id}
     - [ ] /{id}/update
     - [ ] /{id}/delete
 - [ ] Issues
     - [ ] /
+        - [ ] `GET`
     - [ ] /create
     - [ ] /{id}
     - [ ] /{id}/update
     - [ ] /{id}/delete
     - [ ] /{id}/vote
+
+### Schemas
