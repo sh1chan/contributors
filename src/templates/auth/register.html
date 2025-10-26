@@ -1,5 +1,11 @@
-<form action="{{ url_for('register_post') }}" method="POST">
-    <input name="username" placeholder="Username" autocomplete="off" />
-    <input name="password" placeholder="Password" autocomplete="off" />
-    <input type="submit" />
-</form>
+<div class="container" style="text-align: center;">
+    <form
+        action="{{ url_for('register_post') }}"
+        method="POST"
+        style="display: inline-grid;"
+    >
+        <input name="username" placeholder="Username" autocomplete="off" />
+        <input name="password" placeholder="Password" autocomplete="off" />
+        <input type="submit" />
+    </form>
+</div>
