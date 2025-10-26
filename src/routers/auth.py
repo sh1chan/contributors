@@ -4,7 +4,7 @@
 from fastapi import APIRouter
 from fastapi import Request
 
-from src.app import template_files
+from src.core.app import template_files
 
 
 auth_router = APIRouter(prefix="/auth", tags=["auth"])

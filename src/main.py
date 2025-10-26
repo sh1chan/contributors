@@ -1,4 +1,4 @@
-from src.app import get_app
+from src.core.app import get_app
 
 
 app = get_app()
