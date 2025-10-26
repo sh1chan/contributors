@@ -6,6 +6,7 @@ from typing import Annotated
 from fastapi import APIRouter
 from fastapi import Request
 from fastapi import Depends
+from fastapi import Query
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.security import OAuth2PasswordRequestForm
 
@@ -18,11 +19,20 @@ auth_router = APIRouter(prefix="/auth", tags=["auth"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
-@auth_router.get("/register")
-async def register_get(request: Request):
+@auth_router.get("/register", name="register_get")
+async def register_get(
+    request: Request,
+    error_message: Annotated[
+        str | None,
+        Query(title="Error Message"),
+    ] = None,
+):
     return template_files.TemplateResponse(
         request=request,
         name="auth/register.html",
+        context={
+            "error_message": error_message,
+        }
     )
 
 
