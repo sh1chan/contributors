@@ -7,8 +7,10 @@ from fastapi import APIRouter
 from fastapi import Request
 from fastapi import Depends
 from fastapi import Query
+from fastapi import status
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.responses import RedirectResponse
 
 from src.core.app import template_files
 from src.core.db import MongoDB
@@ -38,15 +40,47 @@ async def register_get(
 
 @auth_router.post("/register")
 async def register_post(
+    request: Request,
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
 ):
     """
     """
+    username = form_data.username.strip()
+    password = form_data.password.strip()
+
+    if not all((username, password)):
+        redirect_url = request.url_for(
+            "register_get"
+        ).include_query_params(
+            error_message="Register Failed; Credentials are required.",
+        )
+        return RedirectResponse(
+            url=redirect_url,
+            status_code=status.HTTP_302_FOUND,
+        )
+
     collection = await MongoDB.collection(DBCollectionsEnum.users)
-    result = await collection.insert_one(
+    db_user = await collection.find_one({"username": username})
+
+    if db_user:
+        redirect_url = request.url_for(
+            "register_get"
+        ).include_query_params(
+            error_message="Register Failed; Username must be unique.",
+        )
+        return RedirectResponse(
+            url=redirect_url,
+            status_code=status.HTTP_302_FOUND,
+        )
+
+    await collection.insert_one(
         {
-            "username": form_data.username,
-            "password": form_data.password,
+            "username": username,
+            "password": password,
         }
     )
-    return str(result.inserted_id)
+
+    return RedirectResponse(
+        url=request.url_for("login_get"),
+        status_code=status.HTTP_302_FOUND,
+    )
