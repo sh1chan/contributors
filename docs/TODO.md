@@ -1,6 +1,8 @@
 v0.1.0
 ------
-- [ ] Users Auth
+- [ ] Auth
+- [ ] Projects
+- [ ] Issues
 
 
 ## TODO Checkbox
@@ -17,9 +19,33 @@ v0.1.0
     - [ ] Tags
     - [ ] Labels
 
-### Users
+### Routers
 - [ ] Auth
-- [ ] CRUD
-
-### Issues
-- [ ] CRUD
+    - [ ] /register
+    - [ ] /login
+    - [ ] /logoug
+    - [ ] /
+    - [ ] /update
+    - [ ] /delete
+- [ ] Users
+    - [ ] /
+    - [ ] /{id}
+- [ ] Teams
+    - [ ] /
+    - [ ] /create
+    - [ ] /{id}
+    - [ ] /{id}/update
+    - [ ] /{id}/delete
+- [ ] Projects
+    - [ ] /
+    - [ ] /create
+    - [ ] /{id}
+    - [ ] /{id}/update
+    - [ ] /{id}/delete
+- [ ] Issues
+    - [ ] /
+    - [ ] /create
+    - [ ] /{id}
+    - [ ] /{id}/update
+    - [ ] /{id}/delete
+    - [ ] /{id}/vote
