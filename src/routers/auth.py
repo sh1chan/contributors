@@ -1,8 +1,11 @@
 """ Auth Router
 """
 
+import datetime
 from typing import Annotated
 
+import jwt
+from jwt.exceptions import InvalidTokenError
 from fastapi import APIRouter
 from fastapi import Request
 from fastapi import Depends
@@ -11,11 +14,15 @@ from fastapi import status
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import RedirectResponse
+from fastapi.exceptions import HTTPException
 from pwdlib import PasswordHash
 
 from src.core.app import template_files
 from src.core.db import MongoDB
 from src.core.db import DBCollectionsEnum
+from src.core.config import Secret
+from src.schemas.auth import TokenOut
+from src.schemas.auth import TokenData
 
 
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
@@ -30,6 +37,48 @@ def verify_password(plain_password, hashed_password):
 
 def get_password_hash(plain_password):
     return password_hash.hash(plain_password)
+
+
+def create_access_token(data: dict, expires_delta: datetime.timedelta):
+    """
+    """
+    return jwt.encode(
+        {
+            **data,
+            "exp": datetime.datetime.now(
+                datetime.timezone.utc
+            ) + expires_delta,
+        },
+        Secret.SECRET_KEY,
+        algorithm=Secret.ALGORITHM,
+    )
+
+
+async def get_current_user(token: str = Depends(oauth2_scheme)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(
+            token,
+            key=Secret.SECRET_KEY,
+            algorithms=[Secret.ALGORITHM],
+        )
+        username = payload.get("sub")
+        if username is None:
+            raise credentials_exception
+        token_data = TokenData(username=username)
+    except InvalidTokenError:
+        raise credentials_exception
+
+    collection = await MongoDB.collection(DBCollectionsEnum.users)
+    db_user = await collection.find_one({"username": token_data.username})
+    if db_user is None:
+        raise credentials_exception
+
+    return db_user
 
 
 @auth_router.get("/register", name="register_get")
@@ -151,4 +200,14 @@ async def login_post(
             status_code=status.HTTP_302_FOUND,
         )
 
-    return {}
+    access_token_expires = datetime.timedelta(
+        minutes=Secret.ACCESS_TOKEN_EXPIRE_MINUTES,
+    )
+    access_token = create_access_token(
+        data={"sub": db_user["username"]},
+        expires_delta=access_token_expires,
+    )
+    return TokenOut(
+        access_token=access_token,
+        token_type="bearer",
+    )
