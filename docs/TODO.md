@@ -25,7 +25,7 @@ v0.1.0
 
 ### Routers
 - [ ] Auth
-    - [ ] /register
+    - [x] /register
         - [x] `GET`
             - [x] Response Template
             - [x] Show ErrorMessage
@@ -35,11 +35,16 @@ v0.1.0
                 - [x] Unique fields: `username`
                 - [x] Generate ErrorMessage
             - [x] Register User
+                - [x] Save hashed `password`
             - [x] Redirect to the `login` page
     - [ ] /login
-        - [ ] `GET`
-            - [ ] Response Template
+        - [x] `GET`
+            - [x] Response Template
+            - [x] Show ErrorMessage
         - [ ] `POST`
+            - [ ] Validate User Credentials
+                - [x] Required fields: `username`, `password`
+                - [ ] Use Password Hash to compare passwords
             - [ ] Generate JWT with `expire` time
             - [ ] Set Auth Response Headers
     - [ ] /logoug
