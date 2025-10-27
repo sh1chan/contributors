@@ -38,7 +38,7 @@ async def register_get(
     )
 
 
-@auth_router.post("/register")
+@auth_router.post("/register", name="register_post")
 async def register_post(
     request: Request,
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
@@ -83,4 +83,21 @@ async def register_post(
     return RedirectResponse(
         url=request.url_for("login_get"),
         status_code=status.HTTP_302_FOUND,
+    )
+
+
+@auth_router.get("/login", name="login_get")
+async def login_get(
+    request: Request,
+    error_message: Annotated[
+        str | None,
+        Query(title="Error Message"),
+    ] = None,
+):
+    return template_files.TemplateResponse(
+        request=request,
+        name="auth/login.html",
+        context={
+            "error_message": error_message,
+        }
     )
