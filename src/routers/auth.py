@@ -19,6 +19,7 @@ from src.core.db import DBCollectionsEnum
 
 
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 password_hash = PasswordHash.recommended()
 
@@ -111,3 +112,43 @@ async def login_get(
             "error_message": error_message,
         }
     )
+
+
+@auth_router.post("/login", name="login_post")
+async def login_post(
+    request: Request,
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+):
+    """
+    """
+    redirect_url = request.url_for(
+        "login_get"
+    ).include_query_params(
+        error_message="Login Failed; Invalid credentials.",
+    )
+
+    username = form_data.username.strip()
+    password = form_data.password.strip()
+
+    if not all((username, password)):
+        return RedirectResponse(
+            url=redirect_url,
+            status_code=status.HTTP_302_FOUND,
+        )
+
+    collection = await MongoDB.collection(DBCollectionsEnum.users)
+    db_user = await collection.find_one({"username": username})
+
+    if not db_user:
+        return RedirectResponse(
+            url=redirect_url,
+            status_code=status.HTTP_302_FOUND,
+        )
+
+    if not verify_password(password, db_user["password"]):
+        return RedirectResponse(
+            url=redirect_url,
+            status_code=status.HTTP_302_FOUND,
+        )
+
+    return {}
