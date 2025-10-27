@@ -1,0 +1,24 @@
+<div class="container" style="text-align: center;">
+    {% if error_message %}
+    <h5>{{ error_message }}</h5>
+    {% endif %}
+    <form
+        action="{{ url_for('login_post') }}"
+        method="POST"
+        style="display: inline-grid;"
+    >
+        <input
+            name="username"
+            placeholder="Username"
+            autocomplete="off"
+            required
+        />
+        <input
+            name="password"
+            placeholder="Password"
+            autocomplete="off"
+            required
+        />
+        <input type="submit" />
+    </form>
+</div>
