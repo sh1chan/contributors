@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.5 Chrome/138.0.7204.251 Electron/37.6.1 Safari/537.36" version="28.2.5" pages="2">
   <diagram name="Arch" id="UJKZjxVwBtWNaq-Kvzxa">
-    <mxGraphModel dx="2037" dy="1209" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="983" dy="583" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -343,7 +343,7 @@
         <mxCell id="rV19E3cG9oeUyWE12AIr-5" value="Projects" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="1480" y="120" width="160" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="rV19E3cG9oeUyWE12AIr-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#f0a30a;strokeColor=#BD7000;" edge="1" parent="1" source="rV19E3cG9oeUyWE12AIr-6" target="rV19E3cG9oeUyWE12AIr-20">
+        <mxCell id="rV19E3cG9oeUyWE12AIr-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#008a00;strokeColor=#005700;" edge="1" parent="1" source="rV19E3cG9oeUyWE12AIr-6" target="rV19E3cG9oeUyWE12AIr-20">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1060" y="140" />

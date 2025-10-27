@@ -28,9 +28,14 @@ v0.1.0
     - [ ] /register
         - [x] `GET`
             - [x] Response Template
-        - [ ] `POST`
-            - [ ] Register User
-            - [ ] Redirect to the `login` page
+            - [x] Show ErrorMessage
+        - [x] `POST`
+            - [x] Validate User Credentials
+                - [x] Required fields: `username`, `password`
+                - [x] Unique fields: `username`
+                - [x] Generate ErrorMessage
+            - [x] Register User
+            - [x] Redirect to the `login` page
     - [ ] /login
         - [ ] `GET`
             - [ ] Response Template
