@@ -37,18 +37,22 @@ v0.1.0
             - [x] Register User
                 - [x] Save hashed `password`
             - [x] Redirect to the `login` page
-    - [ ] /login
+    - [x] /login
         - [x] `GET`
             - [x] Response Template
             - [x] Show ErrorMessage
-        - [ ] `POST`
+        - [x] `POST`
             - [x] Validate User Credentials
                 - [x] Required fields: `username`, `password`
                 - [x] Use Password Hash to compare passwords
             - [x] Generate JWT with `expire` time
-            - [ ] Set Auth Response Headers
-    - [ ] /logoug
-        - [ ] `POST`
+            - [x] Redirect user to the `issues` router
+                - [x] Set `access_token` to the response cookies
+    - [x] /logout
+        - [x] `GET`
+            - [x] Check if the User is logged in
+            - [x] UnSet `access_token` from the response cookies
+            - [x] Redirect user to the `issues` router
     - [ ] /
     - [ ] /update
     - [ ] /delete
@@ -71,6 +75,7 @@ v0.1.0
 - [ ] Issues
     - [ ] /
         - [ ] `GET`
+            - [ ] Validate Auth
     - [ ] /create
     - [ ] /{id}
     - [ ] /{id}/update
