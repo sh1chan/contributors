@@ -5,29 +5,26 @@ import datetime
 from typing import Annotated
 
 import jwt
-from jwt.exceptions import InvalidTokenError
+from pwdlib import PasswordHash
 from fastapi import APIRouter
 from fastapi import Request
 from fastapi import Depends
 from fastapi import Query
+from fastapi import Cookie
 from fastapi import status
-from fastapi.security import OAuth2PasswordBearer
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import RedirectResponse
 from fastapi.exceptions import HTTPException
-from pwdlib import PasswordHash
 
 from src.core.app import template_files
 from src.core.db import MongoDB
 from src.core.db import DBCollectionsEnum
 from src.core.config import Secret
-from src.schemas.auth import TokenOut
 from src.schemas.auth import TokenData
 
 
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 password_hash = PasswordHash.recommended()
 
 
@@ -54,15 +51,19 @@ def create_access_token(data: dict, expires_delta: datetime.timedelta):
     )
 
 
-async def get_current_user(token: str = Depends(oauth2_scheme)):
+async def get_current_user(
+    access_token: Annotated[str | None, Cookie()] = None,
+):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
+    if not access_token:
+        raise credentials_exception
     try:
         payload = jwt.decode(
-            token,
+            access_token,
             key=Secret.SECRET_KEY,
             algorithms=[Secret.ALGORITHM],
         )
@@ -70,7 +71,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         if username is None:
             raise credentials_exception
         token_data = TokenData(username=username)
-    except InvalidTokenError:
+    except jwt.exceptions.InvalidTokenError:
         raise credentials_exception
 
     collection = await MongoDB.collection(DBCollectionsEnum.users)
@@ -200,14 +201,17 @@ async def login_post(
             status_code=status.HTTP_302_FOUND,
         )
 
-    access_token_expires = datetime.timedelta(
-        minutes=Secret.ACCESS_TOKEN_EXPIRE_MINUTES,
-    )
     access_token = create_access_token(
         data={"sub": db_user["username"]},
-        expires_delta=access_token_expires,
+        expires_delta=datetime.timedelta(
+            minutes=Secret.ACCESS_TOKEN_EXPIRE_MINUTES,
+        ),
     )
-    return TokenOut(
-        access_token=access_token,
-        token_type="bearer",
+
+    response = RedirectResponse(
+        url=request.url_for("issues_get"),
+        status_code=status.HTTP_302_FOUND,
     )
+    response.set_cookie("access_token", access_token)
+
+    return response
