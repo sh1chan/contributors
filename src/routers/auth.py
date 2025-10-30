@@ -215,3 +215,17 @@ async def login_post(
     response.set_cookie("access_token", access_token)
 
     return response
+
+
+@auth_router.get("/logout", name="logout_get")
+async def logout_get(
+    request: Request,
+    _=Depends(get_current_user)
+):
+    response = RedirectResponse(
+        url=request.url_for("issues_get"),
+        status_code=status.HTTP_302_FOUND,
+    )
+    response.delete_cookie("access_token")
+
+    return response
