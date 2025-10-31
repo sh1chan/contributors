@@ -3,6 +3,7 @@ from typing import Annotated
 from urllib.parse import urlparse
 from urllib.parse import urlunparse
 
+import pymongo
 from fastapi import APIRouter
 from fastapi import Request
 from fastapi import Depends
@@ -35,7 +36,9 @@ async def issues_get(
     collection = await MongoDB.collection(DBCollectionsEnum.issues)
     db_issues = []
 
-    async with collection.find() as cursor:
+    async with collection.find().sort(
+        "creation_dt", pymongo.DESCENDING,
+    ) as cursor:
         async for issue in cursor:
             db_issues.append(IssuesModel(**issue))
 
@@ -104,7 +107,7 @@ async def issues_add_post(
     await collection.insert_one(
         {
             "url": clean_url,
-            "title": url_path,
+            "title": clean_url,
             "added_by": current_user["_id"],
             "creation_dt": str(datetime.datetime.now(tz=datetime.UTC)),
         }
