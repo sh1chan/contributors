@@ -19,7 +19,7 @@
       <a href="">Projects</a>
       <a href="{{ url_for('issues_get') }}">Issues</a>
       {% if user %}
-      <a href="{{ url_for('logout_post') }}">Logout</a>
+      <a href="{{ url_for('logout_get') }}">Logout</a>
       {% else %}
       <a href="{{ url_for('login_get') }}">Login</a>
       {% endif %}

@@ -45,12 +45,12 @@ Just list the created / added issues
 {% block body %}
 {% if user %}
 <form
-  action="{{ url_for('login_post') }}"
+  action="{{ url_for('issues_add_post') }}"
   method="POST"
   style="display: inline-grid;"
 >
   <input
-    name="issues-add"
+    name="url"
     placeholder="Add an issue link"
     autocomplete="off"
     required
