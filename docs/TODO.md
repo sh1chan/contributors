@@ -76,9 +76,18 @@ v0.1.0
     - [ ] /
         - [ ] `GET`
             - [ ] Query Issues
-            - [ ] No logging is required, so users can query `issues`
+            - [x] No logging is required, so users can query `issues`
+    - [ ] /add
         - [ ] `POST`
+            - [x] User Required
+            - [ ] Validate Issues URL
+                - [x] Github
+                - [ ] Gitlab
+            - [x] Redirect user to the `issues` router
+                - [x] Add `error_message`
     - [ ] /create
+        - [ ] `POST`
+            - [ ] Validate
     - [ ] /{id}
     - [ ] /{id}/update
     - [ ] /{id}/delete
