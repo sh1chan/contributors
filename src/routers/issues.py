@@ -1,6 +1,9 @@
+from typing import Annotated
+
 from fastapi import APIRouter
 from fastapi import Request
 from fastapi import Depends
+from fastapi import Query
 
 from src.core.app import template_files
 from src.routers.auth import get_optional_current_user
@@ -12,6 +15,10 @@ issues_router = APIRouter(prefix="/issues", tags=["issues"])
 @issues_router.get("/", name="issues_get")
 async def issues_get(
     request: Request,
+    error_message: Annotated[
+        str | None,
+        Query(title="Error Message"),
+    ] = None,
     current_user=Depends(get_optional_current_user),
 ):
     return template_files.TemplateResponse(
@@ -20,5 +27,6 @@ async def issues_get(
         context={
             "user": current_user,
             "issues": [],
+            "error_message": error_message,
         }
     )

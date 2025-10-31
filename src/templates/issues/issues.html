@@ -60,6 +60,9 @@ Just list the created / added issues
 {% endif %}
 
 <div class="container">
+  {% if error_message %}
+  <h5 style="margin-bottom: 0px;">{{ error_message }}</h5>
+  {% endif %}
   {% for issue in issues %}
   <p>
     {{ issue.title }}</br>
