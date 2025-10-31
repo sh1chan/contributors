@@ -75,13 +75,19 @@ v0.1.0
 - [ ] Issues
     - [ ] /
         - [ ] `GET`
-            - [ ] Query Issues
+            - [x] Query Issues
+                - [x] Sort Issues (by `creation_dt`)
+            - [ ] Filter Issues
+                - [ ] tags
+                - [ ] labels
             - [x] No logging is required, so users can query `issues`
     - [ ] /add
         - [ ] `POST`
             - [x] User Required
             - [ ] Validate Issues URL
                 - [x] Github
+                    - [x] by netloc
+                    - [ ] by path
                 - [ ] Gitlab
             - [x] Redirect user to the `issues` router
                 - [x] Add `error_message`
