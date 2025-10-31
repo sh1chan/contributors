@@ -17,6 +17,7 @@ from src.core.db import DBCollectionsEnum
 from src.core.enums import IssuesSupportedURLEnum
 from src.routers.auth import get_current_user
 from src.routers.auth import get_optional_current_user
+from src.schemas.issues import IssuesModel
 
 
 issues_router = APIRouter(prefix="/issues", tags=["issues"])
@@ -31,12 +32,19 @@ async def issues_get(
     ] = None,
     current_user=Depends(get_optional_current_user),
 ):
+    collection = await MongoDB.collection(DBCollectionsEnum.issues)
+    db_issues = []
+
+    async with collection.find() as cursor:
+        async for issue in cursor:
+            db_issues.append(IssuesModel(**issue))
+
     return template_files.TemplateResponse(
         request=request,
         name="issues/issues.html",
         context={
             "user": current_user,
-            "issues": [],
+            "issues": db_issues,
             "error_message": error_message,
         }
     )
