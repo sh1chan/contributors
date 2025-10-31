@@ -75,7 +75,9 @@ v0.1.0
 - [ ] Issues
     - [ ] /
         - [ ] `GET`
-            - [ ] Validate Auth
+            - [ ] Query Issues
+            - [ ] No logging is required, so users can query `issues`
+        - [ ] `POST`
     - [ ] /create
     - [ ] /{id}
     - [ ] /{id}/update
