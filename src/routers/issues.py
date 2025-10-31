@@ -1,3 +1,4 @@
+import datetime
 from typing import Annotated
 from urllib.parse import urlparse
 from urllib.parse import urlunparse
@@ -95,7 +96,9 @@ async def issues_add_post(
     await collection.insert_one(
         {
             "url": clean_url,
+            "title": url_path,
             "added_by": current_user["_id"],
+            "creation_dt": str(datetime.datetime.now(tz=datetime.UTC)),
         }
     )
 
