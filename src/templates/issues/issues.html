@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+
 <!--
 
     on the left side we're listing the issues
@@ -39,41 +42,35 @@ Just list the created / added issues
 
 -->
 
-
-<div class="nav">
-    <a href="">Teams</a>
-    <a href="">Projects</a>
-    <a href="">Issues</a>
-    <a href="">Account</a>
-</div>
-
+{% block body %}
 {% if user %}
 <form
-    action="{{ url_for('login_post') }}"
-    method="POST"
-    style="display: inline-grid;"
+  action="{{ url_for('login_post') }}"
+  method="POST"
+  style="display: inline-grid;"
 >
-    <input
-        name="issues-add"
-        placeholder="Add an issue link"
-        autocomplete="off"
-        required
-    />
-    <input type="submit" />
+  <input
+    name="issues-add"
+    placeholder="Add an issue link"
+    autocomplete="off"
+    required
+  />
+  <input type="submit" />
 </form>
 {% endif %}
 
 <div class="container">
-    {% for issue in issues %}
-    <p>
-        {{ issue.title }}</br>
-        {% for tag in issue.tags %}
-        {% if user and tag in user.tags %}
-        <span class="tag-hl">{{ tag }}</span>
-        {% else %}
-        <span class="tag-hl">{{ tag }}</span>
-        {% endif %}
-        {% endfor %}
-    </p>
+  {% for issue in issues %}
+  <p>
+    {{ issue.title }}</br>
+    {% for tag in issue.tags %}
+    {% if user and tag in user.tags %}
+    <span class="tag-hl">{{ tag }}</span>
+    {% else %}
+    <span class="tag-hl">{{ tag }}</span>
+    {% endif %}
     {% endfor %}
+  </p>
+  {% endfor %}
 </div>
+{% endblock %}
