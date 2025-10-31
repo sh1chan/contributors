@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>{% block title %}Contributors{% endblock %}</title>
+    <style>
+      .nav {
+        text-align: center;
+      }
+    </style>
+    {% block style %}
+    {% endblock %}
+  </head>
+
+  <body>
+    <div class="nav">
+      <a href="">Teams</a>
+      <a href="">Projects</a>
+      <a href="{{ url_for('issues_get') }}">Issues</a>
+      {% if user %}
+      <a href="{{ url_for('logout_post') }}">Logout</a>
+      {% else %}
+      <a href="{{ url_for('login_get') }}">Login</a>
+      {% endif %}
+    </div>
+
+    {% block body %}
+    {% endblock %}
+
+    {% block script %}
+    {% endblock %}
+  </body>
+
+  <footer>
+  </footer>
+
+</html>
