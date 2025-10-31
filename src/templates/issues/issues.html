@@ -1,0 +1,79 @@
+<!--
+
+    on the left side we're listing the issues
+    - grouped by projects / or by a custom group
+
+    on the right side we're displaying the issues data
+
+    We also gonna need a form to create / add an issue
+    - on creating the issues we're going the get the tags and labels
+    - from the source that this issues is posted
+        - if it is from a code "posting" platform
+        - or we let the user who created this issues add the tags and labels too
+
+    Matching Tags (issues, users) will be hightlighted
+
+
+{ block list
+    { block issue (one block)
+        - title
+        - tags (can be limited)
+    }
+    e.g
+        Can't set the cookies
+        [#python] [#fastapi] [#cookies] ...
+}
+
+
+[ projects      [ issues    [ issue
+                |           |   { BLOCK }
+                |           |
+                ]           ]       Chat]
+-->
+
+
+
+<!-- v0.1.0
+
+Just list the created / added issues
+
+-->
+
+
+<div class="nav">
+    <a href="">Teams</a>
+    <a href="">Projects</a>
+    <a href="">Issues</a>
+    <a href="">Account</a>
+</div>
+
+{% if user %}
+<form
+    action="{{ url_for('login_post') }}"
+    method="POST"
+    style="display: inline-grid;"
+>
+    <input
+        name="issues-add"
+        placeholder="Add an issue link"
+        autocomplete="off"
+        required
+    />
+    <input type="submit" />
+</form>
+{% endif %}
+
+<div class="container">
+    {% for issue in issues %}
+    <p>
+        {{ issue.title }}</br>
+        {% for tag in issue.tags %}
+        {% if user and tag in user.tags %}
+        <span class="tag-hl">{{ tag }}</span>
+        {% else %}
+        <span class="tag-hl">{{ tag }}</span>
+        {% endif %}
+        {% endfor %}
+    </p>
+    {% endfor %}
+</div>
