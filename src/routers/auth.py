@@ -20,6 +20,7 @@ from src.core.app import template_files
 from src.core.db import MongoDB
 from src.core.db import DBCollectionsEnum
 from src.core.config import Secret
+from src.core.enums import CookiesKeysEnum
 from src.schemas.auth import TokenData
 
 
@@ -49,6 +50,35 @@ def create_access_token(data: dict, expires_delta: datetime.timedelta):
         Secret.SECRET_KEY,
         algorithm=Secret.ALGORITHM,
     )
+
+
+async def get_optional_current_user(
+    access_token: Annotated[str | None, Cookie()] = None,
+):
+    if not access_token:
+        return None
+
+    try:
+        payload = jwt.decode(
+            access_token,
+            key=Secret.SECRET_KEY,
+            algorithms=[Secret.ALGORITHM],
+        )
+    except jwt.exceptions.InvalidTokenError:
+        return None
+
+    username = payload.get("sub")
+
+    if username is None:
+        return None
+
+    collection = await MongoDB.collection(DBCollectionsEnum.users)
+    db_user = await collection.find_one({"username": username})
+
+    if db_user is None:
+        return None
+
+    return db_user
 
 
 async def get_current_user(
@@ -212,7 +242,7 @@ async def login_post(
         url=request.url_for("issues_get"),
         status_code=status.HTTP_302_FOUND,
     )
-    response.set_cookie("access_token", access_token)
+    response.set_cookie(CookiesKeysEnum.access_token, access_token)
 
     return response
 
@@ -226,6 +256,6 @@ async def logout_get(
         url=request.url_for("issues_get"),
         status_code=status.HTTP_302_FOUND,
     )
-    response.delete_cookie("access_token")
+    response.delete_cookie(CookiesKeysEnum.access_token)
 
     return response
