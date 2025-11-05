@@ -53,8 +53,8 @@ async def issues_get(
     )
 
 
-@issues_router.post("/add", name="issues_add_post")
-async def issues_add_post(
+@issues_router.post("/add", name="post_issues_add")
+async def post_issues_add(
     url: Annotated[str, Form()],
     request: Request,
     current_user=Depends(get_current_user),
