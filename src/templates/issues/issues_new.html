@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 
+{% block style %}
+<style>
+  input:required {
+    /* background-color: palegreen; */
+    background-color: lavenderblush;
+  }
+</style>
+{% endblock %}
+
 
 {% block body %}
 <div class="container" style="text-align: center;">
@@ -7,17 +16,38 @@
   <h5>{{ error_message }}</h5>
   {% endif %}
   <div class="forms">
-    <div class="post_issues_add">
+    <div class="post_issues_new">
       <form
-        action="{{ url_for('post_issues_add') }}"
+        action="{{ url_for('post_issues_new') }}"
         method="POST"
         style="display: inline-grid;"
       >
         <input
           name="url"
-          placeholder="Add an issue link"
+          placeholder="Add an issue link. e.g. Github, Gitlab, ..."
+          autocomplete="off"
+        />
+        <input
+          name="title"
+          placeholder="Add title"
           autocomplete="off"
           required
+        />
+        <textarea
+          name="description"
+          placeholder="Add description"
+          autocomplete="off"
+          style="min-width: 400px; min-height: 100px;"></textarea>
+        <input
+          name="tags"
+          placeholder="Add tags. e.g. linux, python"
+          autocomplete="off"
+          required
+        />
+        <input
+          name="labels"
+          placeholder="Add labels. e.g. bug, api"
+          autocomplete="off"
         />
         <input type="submit" />
       </form>
