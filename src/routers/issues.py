@@ -91,7 +91,7 @@ async def post_issues_new(
             redirect_url = request.url_for(
                 "get_issues_new"
             ).include_query_params(
-                error_message="Issues Add Failed; Not valid URL.",
+                error_message="Issues New Failed; Not valid URL.",
             )
             return RedirectResponse(
                 url=redirect_url,
@@ -102,7 +102,7 @@ async def post_issues_new(
             redirect_url = request.url_for(
                 "get_issues_new"
             ).include_query_params(
-                error_message="Issues Add Failed; URL is not supported.",
+                error_message="Issues New Failed; URL is not supported.",
             )
             return RedirectResponse(
                 url=redirect_url,
@@ -119,7 +119,7 @@ async def post_issues_new(
                 "get_issues_new"
             ).include_query_params(
                 error_message=(
-                    f"Issues Add Failed; "
+                    f"Issues New Failed; "
                     f"URL exists (#{db_issue['_id']})."
                 ),
             )
@@ -141,9 +141,14 @@ async def post_issues_new(
     else:
         document["created_by"] = current_user["_id"]
 
-    await collection.insert_one(document=document)
+    result = await collection.insert_one(document=document)
 
+    redirect_url = request.url_for(
+        "get_issues_new"
+    ).include_query_params(
+        error_message=f"Issues New Succeed; (#{result.inserted_id})",
+    )
     return RedirectResponse(
-        url=request.url_for("get_issues_new"),
+        url=redirect_url,
         status_code=status.HTTP_303_SEE_OTHER,
     )
