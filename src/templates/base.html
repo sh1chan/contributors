@@ -6,7 +6,8 @@
     <title>{% block title %}Contributors{% endblock %}</title>
     <style>
       .nav {
-        text-align: center;
+        display: flex;
+        justify-content: space-between;
       }
     </style>
     {% block style %}
@@ -15,14 +16,26 @@
 
   <body>
     <div class="nav">
-      <a href="">Teams</a>
-      <a href="">Projects</a>
-      <a href="{{ url_for('issues_get') }}">Issues</a>
-      {% if user %}
-      <a href="{{ url_for('logout_get') }}">Logout</a>
-      {% else %}
-      <a href="{{ url_for('login_get') }}">Login</a>
-      {% endif %}
+      <div class="nav-left">
+        <a href="">Teams</a>
+        <a href="">Projects</a>
+        <a href="{{ url_for('issues_get') }}">Issues</a>
+        {% block nav_left %}
+        {% endblock %}
+      </div>
+      <div class="nav-center">
+        {% block nav_center %}
+        {% endblock %}
+      </div>
+      <div class="nav-right">
+        {% block nav_right %}
+        {% endblock %}
+        {% if user %}
+        <a href="{{ url_for('logout_get') }}">Logout</a>
+        {% else %}
+        <a href="{{ url_for('login_get') }}">Login</a>
+        {% endif %}
+      </div>
     </div>
 
     {% block body %}
