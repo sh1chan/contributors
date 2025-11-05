@@ -57,17 +57,19 @@
   {% if error_message %}
   <h5 style="margin-bottom: 0px;">{{ error_message }}</h5>
   {% endif %}
-  {% for issue in issues %}
-  <p>
-    {{ issue.title }}</br>
-    {% for tag in issue.tags %}
-    {% if user and tag in user.tags %}
-    <span class="tag-hl">{{ tag }}</span>
-    {% else %}
-    <span class="tag-hl">{{ tag }}</span>
-    {% endif %}
+  <ul>
+    {% for issue in issues %}
+    <li>
+      {{ issue.title }}</br>
+      {% for tag in issue.tags %}
+      {% if user and tag in user.tags %}
+      <span class="tag-hl">#{{ tag }}</span>
+      {% else %}
+      <span class="tag-hl">#{{ tag }}</span>
+      {% endif %}
+      {% endfor %}
+    </li>
     {% endfor %}
-  </p>
-  {% endfor %}
+  </ul>
 </div>
 {% endblock %}
