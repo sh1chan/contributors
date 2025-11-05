@@ -24,6 +24,10 @@ v0.1.0
 - [ ] Static Files
 
 ### Routers
+;;
+;; - [ ] `$METHOD_$ROUTER_$ENDPOINT` // endpoint func name
+;; - [x] `nav_endpoints | nav_endpoints_actions | nav_user_account` // navbar
+;;
 - [ ] Auth
     - [x] /register
         - [x] `GET`
@@ -74,13 +78,21 @@ v0.1.0
     - [ ] /{id}/delete
 - [ ] Issues
     - [ ] /
-        - [ ] `GET`
+        - [x] `GET`
             - [x] Query Issues
                 - [x] Sort Issues (by `creation_dt`)
             - [ ] Filter Issues
                 - [ ] tags
                 - [ ] labels
             - [x] No logging is required, so users can query `issues`
+            - [x] actions
+                - [x] Add new issues: `get_issues_new`
+    - [ ] /new
+        - [x] `GET`
+            - [x] User Required
+            - [ ] Render Template
+                - [x] func: Add
+                - [ ] func: Create
     - [ ] /add
         - [ ] `POST`
             - [x] User Required
