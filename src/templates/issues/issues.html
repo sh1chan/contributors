@@ -38,27 +38,13 @@
 
 <!-- v0.1.0
 
-Just list the created / added issues
+- [ ] Just list the created / added issues
+  - [x] list added
+  - [ ] list created
 
 -->
 
 {% block body %}
-{% if user %}
-<form
-  action="{{ url_for('issues_add_post') }}"
-  method="POST"
-  style="display: inline-grid;"
->
-  <input
-    name="url"
-    placeholder="Add an issue link"
-    autocomplete="off"
-    required
-  />
-  <input type="submit" />
-</form>
-{% endif %}
-
 <div class="container">
   {% if error_message %}
   <h5 style="margin-bottom: 0px;">{{ error_message }}</h5>
