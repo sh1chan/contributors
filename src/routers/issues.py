@@ -19,6 +19,7 @@ from src.core.enums import IssuesSupportedURLEnum
 from src.routers.auth import get_current_user
 from src.routers.auth import get_optional_current_user
 from src.schemas.issues import IssuesModel
+from src.schemas.issues import IssuesNewIn
 
 
 issues_router = APIRouter(prefix="/issues", tags=["issues"])
@@ -74,63 +75,73 @@ async def get_issues_new(
 
 @issues_router.post("/new", name="post_issues_new")
 async def post_issues_new(
-    url: Annotated[str, Form()],
+    form_data: Annotated[IssuesNewIn, Form()],
     request: Request,
     current_user=Depends(get_current_user),
 ):
-    parsed_url = urlparse(url)
-    url_scheme = parsed_url.scheme
-    url_netloc = parsed_url.netloc
-    url_path = parsed_url.path
-
-    if not all((url_scheme, url_netloc, url_path)):
-        redirect_url = request.url_for(
-            "get_issues_new"
-        ).include_query_params(
-            error_message="Issues Add Failed; Not valid URL.",
-        )
-        return RedirectResponse(
-            url=redirect_url,
-            status_code=status.HTTP_303_SEE_OTHER,
-        )
-
-    if url_netloc not in IssuesSupportedURLEnum:
-        redirect_url = request.url_for(
-            "get_issues_new"
-        ).include_query_params(
-            error_message="Issues Add Failed; URL is not supported.",
-        )
-        return RedirectResponse(
-            url=redirect_url,
-            status_code=status.HTTP_303_SEE_OTHER,
-        )
-
-    clean_url = urlunparse((url_scheme, url_netloc, url_path, '', '', ''))
     collection = await MongoDB.collection(DBCollectionsEnum.issues)
-    db_issue = await collection.find_one({"url": clean_url})
 
-    if db_issue:
-        redirect_url = request.url_for(
-            "get_issues_new"
-        ).include_query_params(
-            error_message=(
-                f"Issues Add Failed; "
-                f"URL exists (#{db_issue['_id']})."
-            ),
-        )
-        return RedirectResponse(
-            url=redirect_url,
-            status_code=status.HTTP_302_FOUND,
-        )
+    if form_data.url:
+        parsed_url = urlparse(form_data.url)
+        url_scheme = parsed_url.scheme
+        url_netloc = parsed_url.netloc
+        url_path = parsed_url.path
 
-    await collection.insert_one(
-        {
-            "url": clean_url,
-            "title": clean_url,
-            "added_by": current_user["_id"],
-            "creation_dt": str(datetime.datetime.now(tz=datetime.UTC)),
-        }
-    )
+        if not all((url_scheme, url_netloc, url_path)):
+            redirect_url = request.url_for(
+                "get_issues_new"
+            ).include_query_params(
+                error_message="Issues Add Failed; Not valid URL.",
+            )
+            return RedirectResponse(
+                url=redirect_url,
+                status_code=status.HTTP_303_SEE_OTHER,
+            )
+
+        if url_netloc not in IssuesSupportedURLEnum:
+            redirect_url = request.url_for(
+                "get_issues_new"
+            ).include_query_params(
+                error_message="Issues Add Failed; URL is not supported.",
+            )
+            return RedirectResponse(
+                url=redirect_url,
+                status_code=status.HTTP_303_SEE_OTHER,
+            )
+
+        form_data.url = urlunparse((
+            url_scheme, url_netloc, url_path, '', '', '',
+        ))
+        db_issue = await collection.find_one({"url": form_data.url})
+
+        if db_issue:
+            redirect_url = request.url_for(
+                "get_issues_new"
+            ).include_query_params(
+                error_message=(
+                    f"Issues Add Failed; "
+                    f"URL exists (#{db_issue['_id']})."
+                ),
+            )
+            return RedirectResponse(
+                url=redirect_url,
+                status_code=status.HTTP_302_FOUND,
+            )
+
+    document = {
+        "url": form_data.url,
+        "title": form_data.title,
+        "description": form_data.description,
+        "tags": form_data.all_tags,
+        "labels": form_data.all_labels,
+        "creation_dt": str(datetime.datetime.now(tz=datetime.UTC)),
+    }
+    if form_data.url:
+        document["added_by"] = current_user["_id"]
+    else:
+        document["created_by"] = current_user["_id"]
+
+    await collection.insert_one(document=document)
 
     return RedirectResponse(
         url=request.url_for("get_issues_new"),
