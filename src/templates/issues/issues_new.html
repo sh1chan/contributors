@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<div class="container" style="text-align: center;">
+  {% if error_message %}
+  <h5 style="margin-bottom: 0px;">{{ error_message }}</h5>
+  {% endif %}
+  <div class="forms">
+    <div class="post_issues_add">
+      <form
+        action="{{ url_for('post_issues_add') }}"
+        method="POST"
+        style="display: inline-grid;"
+      >
+        <input
+          name="url"
+          placeholder="Add an issue link"
+          autocomplete="off"
+          required
+        />
+        <input type="submit" />
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

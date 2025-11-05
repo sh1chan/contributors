@@ -53,6 +53,25 @@ async def issues_get(
     )
 
 
+@issues_router.get("/new", name="get_issues_new")
+async def get_issues_new(
+    request: Request,
+    error_message: Annotated[
+        str | None,
+        Query(title="Error Message"),
+    ] = None,
+    current_user=Depends(get_current_user),
+):
+    return template_files.TemplateResponse(
+        request=request,
+        name="issues/issues_new.html",
+        context={
+            "user": current_user,
+            "error_message": error_message,
+        }
+    )
+
+
 @issues_router.post("/add", name="post_issues_add")
 async def post_issues_add(
     url: Annotated[str, Form()],

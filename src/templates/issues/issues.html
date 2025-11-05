@@ -44,6 +44,12 @@
 
 -->
 
+
+{% block nav_center %}
+<a href="{{ url_for('get_issues_new') }}">New Issue</a>
+{% endblock %}
+
+
 {% block body %}
 <div class="container">
   {% if error_message %}
