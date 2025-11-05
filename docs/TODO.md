@@ -77,7 +77,7 @@ v0.1.0
     - [ ] /{id}/update
     - [ ] /{id}/delete
 - [ ] Issues
-    - [ ] /
+    - [x] /
         - [x] `GET`
             - [x] Query Issues
                 - [x] Sort Issues (by `creation_dt`)
@@ -87,25 +87,25 @@ v0.1.0
             - [x] No logging is required, so users can query `issues`
             - [x] actions
                 - [x] Add new issues: `get_issues_new`
-    - [ ] /new
+    - [x] /new
         - [x] `GET`
             - [x] User Required
-            - [ ] Render Template
-                - [x] func: Add
-                - [ ] func: Create
-    - [ ] /add
-        - [ ] `POST`
+            - [x] Render Template
+                - [x] New Issues Form
+        - [x] `POST`
             - [x] User Required
-            - [ ] Validate Issues URL
-                - [x] Github
-                    - [x] by netloc
-                    - [ ] by path
-                - [ ] Gitlab
-            - [x] Redirect user to the `issues` router
+            - [x] Validate form fields
+                - [x] !Title
+                - [x] !Tags
+                - [ ] Issues URL
+                    - [x] Github
+                        - [x] by netloc
+                        - [ ] by path
+                    - [ ] Gitlab
+            - [x] Redirect user to the `get_issues_new` router
                 - [x] Add `error_message`
-    - [ ] /create
-        - [ ] `POST`
-            - [ ] Validate
+            - [ ] Add tags to the database
+            - [ ] Add labels to the database
     - [ ] /{id}
     - [ ] /{id}/update
     - [ ] /{id}/delete
