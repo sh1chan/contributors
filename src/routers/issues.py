@@ -85,7 +85,7 @@ async def post_issues_add(
 
     if not all((url_scheme, url_netloc, url_path)):
         redirect_url = request.url_for(
-            "issues_get"
+            "get_issues_new"
         ).include_query_params(
             error_message="Issues Add Failed; Not valid URL.",
         )
@@ -96,7 +96,7 @@ async def post_issues_add(
 
     if url_netloc not in IssuesSupportedURLEnum:
         redirect_url = request.url_for(
-            "issues_get"
+            "get_issues_new"
         ).include_query_params(
             error_message="Issues Add Failed; URL is not supported.",
         )
@@ -111,7 +111,7 @@ async def post_issues_add(
 
     if db_issue:
         redirect_url = request.url_for(
-            "issues_get"
+            "get_issues_new"
         ).include_query_params(
             error_message=(
                 f"Issues Add Failed; "
@@ -133,6 +133,6 @@ async def post_issues_add(
     )
 
     return RedirectResponse(
-        url=request.url_for("issues_get"),
+        url=request.url_for("get_issues_new"),
         status_code=status.HTTP_303_SEE_OTHER,
     )
