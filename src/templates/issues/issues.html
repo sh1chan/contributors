@@ -53,23 +53,72 @@
 
 
 {% block body %}
-<div class="container">
+<div class="container" style="display: flex;">
   {% if error_message %}
   <h5 style="margin-bottom: 0px;">{{ error_message }}</h5>
   {% endif %}
-  <ul>
-    {% for issue in issues %}
-    <li>
-      {{ issue.title }}</br>
-      {% for tag in issue.tags %}
-      {% if user and tag in user.tags %}
-      <span class="tag-hl">#{{ tag }}</span>
-      {% else %}
-      <span class="tag-hl">#{{ tag }}</span>
-      {% endif %}
+  <div class="projects"></div>
+  <div class="issues">
+    <ul>
+      {% for issue in issues %}
+      <li onclick="openIssuesData(this, '{{ issue.id }}');">
+        {{ issue.title }}</br>
+        {% for tag in issue.tags %}
+        {% if user and tag in user.tags %}
+        <span class="tag-hl">#{{ tag }}</span>
+        {% else %}
+        <span class="tag-hl">#{{ tag }}</span>
+        {% endif %}
+        {% endfor %}
+      </li>
       {% endfor %}
-    </li>
+    </ul>
+  </div>
+  <div class="issues-data">
+    {% for issue in issues %}
+    <div id="issues-{{ issue.id }}-data" style="display: none;">
+      <p><a href="{{ issue.url }}">{{ issue.url }}</a></p>
+      <p>{{ issue.title }} </p>
+      {% if issue.description %}
+      <p>{{ issue.description }}</p>
+      {% endif %}
+      <p>
+        {% for tag in issue.tags %}
+        {% if user and tag in user.tags %}
+        <span class="tag-hl">#{{ tag }}</span>
+        {% else %}
+        <span class="tag-hl">#{{ tag }}</span>
+        {% endif %}
+        {% endfor %}
+      </p>
+      <p>
+        {% for label in issue.labels %}
+        <span>{{ label }}</span>
+        {% endfor %}
+      </p>
+    </div>
     {% endfor %}
-  </ul>
+  </div>
 </div>
+{% endblock %}
+
+
+{% block script %}
+<script>
+  var prevIssue = null;
+  var prevIssueData = null;
+  function openIssuesData(issue, issueId) {
+    if (prevIssue !== null) {
+      prevIssue.style.border = "";
+    }
+    if (prevIssueData !== null) {
+      prevIssueData.style.display = "none";
+    }
+    const issueData = document.getElementById("issues-" + issueId + "-data");
+    issue.style.border = "1px solid palegreen";
+    issueData.style.display = "";
+    prevIssue = issue;
+    prevIssueData = issueData;
+  }
+</script>
 {% endblock %}
