@@ -38,9 +38,7 @@
 
 <!-- v0.1.0
 
-- [ ] Just list the created / added issues
-  - [x] list added
-  - [ ] list created
+- [x] Just list the created / added issues
 
 -->
 
@@ -63,7 +61,7 @@
       {% for issue in issues %}
       <li onclick="openIssuesData(this, '{{ issue.id }}');">
         {{ issue.title }}</br>
-        {% for tag in issue.tags %}
+        {% for tag in issue.categories.tags %}
         {% if user and tag in user.tags %}
         <span class="tag-hl">#{{ tag }}</span>
         {% else %}
@@ -83,7 +81,7 @@
       <p>{{ issue.description }}</p>
       {% endif %}
       <p>
-        {% for tag in issue.tags %}
+        {% for tag in issue.categories.tags %}
         {% if user and tag in user.tags %}
         <span class="tag-hl">#{{ tag }}</span>
         {% else %}
@@ -92,7 +90,7 @@
         {% endfor %}
       </p>
       <p>
-        {% for label in issue.labels %}
+        {% for label in issue.categories.labels %}
         <span>{{ label }}</span>
         {% endfor %}
       </p>
