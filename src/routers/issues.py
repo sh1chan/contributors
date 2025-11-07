@@ -57,6 +57,10 @@ async def issues_get(
     collection = await MongoDB.collection(DBCollectionsEnum.issues)
     db_issues = []
 
+    filters = request.cookies.get(CookiesKeysEnum.filters)
+    if filters:
+        filters = IssuesFiltersModel.model_validate_json(filters)
+
     async with collection.find().sort(
         "creation_dt", pymongo.DESCENDING,
     ) as cursor:
@@ -69,6 +73,7 @@ async def issues_get(
         context={
             "user": current_user,
             "issues": db_issues,
+            "filters": filters,
             "error_message": error_message,
         }
     )
