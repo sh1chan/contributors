@@ -4,6 +4,7 @@ from enum import auto
 
 class CookiesKeysEnum(StrEnum):
     access_token = auto()
+    filters = auto()
 
 
 class IssuesSupportedURLEnum(StrEnum):
