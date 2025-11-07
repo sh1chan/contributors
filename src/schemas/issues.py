@@ -9,13 +9,18 @@ from pydantic import computed_field
 from typing_extensions import Self
 
 
+class IssuesCategoriesModel(BaseModel):
+    tags: list[str] = Field([])
+    labels: list[str] = Field([])
+
+
 class IssuesModel(BaseModel):
     id: ObjectId = Field(..., alias="_id")
     url: AnyHttpUrl | str = Field("")
     title: str
     description: str | None = Field(None)
-    tags: list[str] = Field([])
-    labels: list[str] = Field([])
+    # TODO (ames0k0): Remove old data
+    categories: IssuesCategoriesModel | None = Field(None)
     projects: list[ObjectId] = Field([])
     added_by: ObjectId | None = Field(None)
     created_by: ObjectId | None = Field(None)
