@@ -29,18 +29,20 @@ class IssuesModel(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
 
+def seperate_field_values(field: str, delimiter: str = ',') -> list[str]:
+    """ Returns unique field values
+    """
+    if not field:
+        return []
+    return list(set([v.strip() for v in field.split(delimiter)]))
+
+
 class IssuesNewIn(BaseModel):
     url: str
     title: str
     description: str
     tags: str
     labels: str
-
-    @staticmethod
-    def seperate_field_values(field: str, delimiter: str = ',') -> list[str]:
-        if not field:
-            return []
-        return [v.strip() for v in field.split(delimiter)]
 
     @model_validator(mode='after')
     def clean_up_fields(self) -> Self:
@@ -54,9 +56,9 @@ class IssuesNewIn(BaseModel):
     @computed_field
     @property
     def all_tags(self) -> list[str]:
-        return self.seperate_field_values(self.tags)
+        return seperate_field_values(self.tags)
 
     @computed_field
     @property
     def all_labels(self) -> list[str]:
-        return self.seperate_field_values(self.labels)
+        return seperate_field_values(self.labels)
