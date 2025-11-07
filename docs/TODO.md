@@ -104,8 +104,9 @@ v0.1.0
                     - [ ] Gitlab
             - [x] Redirect user to the `get_issues_new` router
                 - [x] Add `error_message`
-            - [ ] Add tags to the database
-            - [ ] Add labels to the database
+            - [x] Add tags to the database
+            - [x] Add labels to the database
+            - [ ] Generate a `project` for an Issues URL
     - [ ] /{id}
     - [ ] /{id}/update
     - [ ] /{id}/delete
