@@ -4,6 +4,7 @@ from urllib.parse import urlparse
 from urllib.parse import urlunparse
 
 import pymongo
+from bson import ObjectId
 from fastapi import APIRouter
 from fastapi import Request
 from fastapi import Depends
@@ -15,6 +16,7 @@ from fastapi.responses import RedirectResponse
 from src.core.app import template_files
 from src.core.db import MongoDB
 from src.core.db import DBCollectionsEnum
+from src.core.enums import CCategoriesIdentifiersEnum
 from src.core.enums import IssuesSupportedURLEnum
 from src.routers.auth import get_current_user
 from src.routers.auth import get_optional_current_user
@@ -80,6 +82,9 @@ async def post_issues_new(
     current_user=Depends(get_current_user),
 ):
     collection = await MongoDB.collection(DBCollectionsEnum.issues)
+    categories_collection = await MongoDB.collection(
+        DBCollectionsEnum.categories,
+    )
 
     if form_data.url:
         parsed_url = urlparse(form_data.url)
@@ -146,6 +151,51 @@ async def post_issues_new(
         document["created_by"] = current_user["_id"]
 
     result = await collection.insert_one(document=document)
+
+    # TODO (ames0k0): DRY
+    # TODO (ames0k0): Unique categories
+    # XXX (ames0k0): LIFO(`issues_ids`)
+    for tag in categories["tags"]:
+        db_ci_tag = await categories_collection.find_one({
+            "identifiers": CCategoriesIdentifiersEnum.tags,
+            "name": tag,
+        })
+        if db_ci_tag:
+            await categories_collection.update_one(
+                {"_id": ObjectId(db_ci_tag["_id"])},
+                {"$set": {
+                    "issues_ids": [
+                        result.inserted_id
+                    ] + db_ci_tag["issues_ids"],
+                }}
+            )
+        else:
+            await categories_collection.insert_one({
+                "identifiers": CCategoriesIdentifiersEnum.tags,
+                "name": tag,
+                "issues_ids": [result.inserted_id]
+            })
+
+    for label in categories["labels"]:
+        db_ci_label = await categories_collection.find_one({
+            "identifier": CCategoriesIdentifiersEnum.labels,
+            "name": label,
+        })
+        if db_ci_label:
+            await categories_collection.update_one(
+                {"_id": ObjectId(db_ci_label["_id"])},
+                {"$set": {
+                    "issues_ids": [
+                        result.inserted_id
+                    ] + db_ci_label["issues_ids"]
+                }}
+            )
+        else:
+            await categories_collection.insert_one({
+                "identifiers": CCategoriesIdentifiersEnum.labels,
+                "name": label,
+                "issues_ids": [result.inserted_id]
+            })
 
     redirect_url = request.url_for(
         "get_issues_new"
