@@ -37,6 +37,29 @@ def seperate_field_values(field: str, delimiter: str = ',') -> list[str]:
     return list(set([v.strip() for v in field.split(delimiter)]))
 
 
+class IssuesFiltersModel(BaseModel):
+    title: str
+    tags: str
+    labels: str
+
+    @model_validator(mode='after')
+    def clean_up_fields(self) -> Self:
+        self.title = self.title.strip()
+        self.tags = self.tags.strip()
+        self.labels = self.labels.strip()
+        return self
+
+    @computed_field
+    @property
+    def all_tags(self) -> list[str]:
+        return seperate_field_values(self.tags)
+
+    @computed_field
+    @property
+    def all_labels(self) -> list[str]:
+        return seperate_field_values(self.labels)
+
+
 class IssuesNewIn(BaseModel):
     url: str
     title: str
