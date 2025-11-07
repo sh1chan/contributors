@@ -82,11 +82,19 @@ v0.1.0
             - [x] Query Issues
                 - [x] Sort Issues (by `creation_dt`)
             - [ ] Filter Issues
-                - [ ] tags
-                - [ ] labels
+                - load filter from db
+                - filter by
+                    - [ ] title
+                    - [ ] tags
+                        - [ ] Selectable tags (list of tags)
+                    - [ ] labels
+                        - [ ] Selectable labels (list of labels)
             - [x] No logging is required, so users can query `issues`
             - [x] actions
                 - [x] Add new issues: `get_issues_new`
+        - [x] `POST`
+            - [x] Save user filters
+            - [x] Redirect user to the `issues_get` router
     - [x] /new
         - [x] `GET`
             - [x] User Required
