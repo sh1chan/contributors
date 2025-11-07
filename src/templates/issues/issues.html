@@ -28,10 +28,10 @@
 }
 
 
-[ projects      [ issues    [ issue
-                |           |   { BLOCK }
-                |           |
-                ]           ]       Chat]
+[ filters   [ projects      [ issues    [ issue
+            |               |           |   { BLOCK }
+            |               |           |
+            ]               ]           ]       Chat]
 -->
 
 
@@ -55,6 +55,30 @@
   {% if error_message %}
   <h5 style="margin-bottom: 0px;">{{ error_message }}</h5>
   {% endif %}
+  <div class="filters" style="margin-top: 16px; margin-bottom: 16px;">
+    <form
+      action="{{ url_for('post_issues') }}"
+      method="POST"
+      style="display: inline-grid;"
+    >
+      <input
+        name="title"
+        placeholder="Tittle"
+        autocomplete="off"
+      />
+      <input
+        name="tags"
+        placeholder="Tags"
+        autocomplete="off"
+      />
+      <input
+        name="labels"
+        placeholder="Labels"
+        autocomplete="off"
+      />
+      <input type="submit" />
+    </form>
+  </div>
   <div class="projects"></div>
   <div class="issues">
     <ul>
