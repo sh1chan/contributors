@@ -63,7 +63,7 @@
     >
       <input
         name="title"
-        placeholder="Tittle"
+        placeholder="Filter by Tittle"
         autocomplete="off"
         {% if filters.title %}
         value="{{ filters.title }}"
@@ -71,7 +71,7 @@
       />
       <input
         name="tags"
-        placeholder="Tags"
+        placeholder="Filter by Tags"
         autocomplete="off"
         {% if filters.tags %}
         value="{{ filters.tags }}"
@@ -79,13 +79,13 @@
       />
       <input
         name="labels"
-        placeholder="Labels"
+        placeholder="Filter by Labels"
         autocomplete="off"
         {% if filters.labels %}
         value="{{ filters.labels }}"
         {% endif %}
       />
-      <input type="submit" />
+      <input type="submit" value="Submit Filter Query" />
     </form>
   </div>
   <div class="projects"></div>
