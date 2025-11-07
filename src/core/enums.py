@@ -8,3 +8,15 @@ class CookiesKeysEnum(StrEnum):
 
 class IssuesSupportedURLEnum(StrEnum):
     github = "github.com"
+
+
+class DBCollectionsEnum(StrEnum):
+    users = auto()
+    projects = auto()
+    issues = auto()
+    categories = auto()
+
+
+class CCategoriesIdentifiersEnum(StrEnum):
+    tags = auto()
+    labels = auto()

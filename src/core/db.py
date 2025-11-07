@@ -1,15 +1,8 @@
-from enum import StrEnum
-from enum import auto
-
 import pymongo
 from pymongo.asynchronous.collection import AsyncCollection
 from pymongo.asynchronous.database import AsyncDatabase
 
-
-class DBCollectionsEnum(StrEnum):
-    users = auto()
-    projects = auto()
-    issues = auto()
+from src.core.enums import DBCollectionsEnum
 
 
 class MongoDB:
