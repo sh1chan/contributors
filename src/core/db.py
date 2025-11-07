@@ -16,6 +16,8 @@ class MongoDB:
             # host="0.0.0.0", port=27017,
         )
         cls.database = getattr(cls.client, "contributors")
+        collection_issues = await cls.collection(DBCollectionsEnum.issues)
+        await collection_issues.create_index([("title", pymongo.TEXT)])
 
     @classmethod
     async def collection(cls, name: DBCollectionsEnum) -> AsyncCollection:
