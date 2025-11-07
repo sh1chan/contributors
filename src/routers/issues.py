@@ -56,12 +56,19 @@ async def issues_get(
 ):
     collection = await MongoDB.collection(DBCollectionsEnum.issues)
     db_issues = []
+    query = {}
 
     filters = request.cookies.get(CookiesKeysEnum.filters)
     if filters:
         filters = IssuesFiltersModel.model_validate_json(filters)
+        if filters.title:
+            query["$text"] = {'$search': filters.title}
+        if filters.tags:
+            query["categories.tags"] = {'$in': filters.all_tags}
+        if filters.labels:
+            query["categories.labels"] = {'$in': filters.all_labels}
 
-    async with collection.find().sort(
+    async with collection.find(query).sort(
         "creation_dt", pymongo.DESCENDING,
     ) as cursor:
         async for issue in cursor:
