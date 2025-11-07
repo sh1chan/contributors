@@ -18,13 +18,31 @@ from src.core.db import MongoDB
 from src.core.db import DBCollectionsEnum
 from src.core.enums import CCategoriesIdentifiersEnum
 from src.core.enums import IssuesSupportedURLEnum
+from src.core.enums import CookiesKeysEnum
 from src.routers.auth import get_current_user
 from src.routers.auth import get_optional_current_user
 from src.schemas.issues import IssuesModel
 from src.schemas.issues import IssuesNewIn
+from src.schemas.issues import IssuesFiltersModel
 
 
 issues_router = APIRouter(prefix="/issues", tags=["issues"])
+
+
+@issues_router.post("/", name="post_issues")
+async def post_issues(
+    form_data: Annotated[IssuesFiltersModel, Form()],
+    request: Request,
+):
+    """ Saves filters in the cookies
+    """
+    response = RedirectResponse(
+        url=request.url_for("issues_get"),
+        status_code=status.HTTP_302_FOUND,
+    )
+    response.set_cookie(CookiesKeysEnum.filters, form_data.model_dump_json())
+
+    return response
 
 
 @issues_router.get("/", name="issues_get")
