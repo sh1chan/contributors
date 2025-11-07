@@ -128,12 +128,16 @@ async def post_issues_new(
                 status_code=status.HTTP_302_FOUND,
             )
 
+    categories = {
+        "tags": form_data.all_tags,
+        "labels": form_data.all_labels,
+    }
+
     document = {
         "url": form_data.url,
         "title": form_data.title,
         "description": form_data.description,
-        "tags": form_data.all_tags,
-        "labels": form_data.all_labels,
+        "categories": categories,
         "creation_dt": str(datetime.datetime.now(tz=datetime.UTC)),
     }
     if form_data.url:
