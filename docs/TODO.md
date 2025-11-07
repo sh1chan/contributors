@@ -52,6 +52,8 @@ v0.1.0
             - [x] Generate JWT with `expire` time
             - [x] Redirect user to the `issues` router
                 - [x] Set `access_token` to the response cookies
+                - [ ] Load user filters from db
+                    - [ ] Set `filters` to the response cookies
     - [x] /logout
         - [x] `GET`
             - [x] Check if the User is logged in
@@ -82,13 +84,13 @@ v0.1.0
             - [x] Query Issues
                 - [x] Sort Issues (by `creation_dt`)
             - [ ] Filter Issues
-                - load filter from db
-                - filter by
-                    - [ ] title
-                    - [ ] tags
-                        - [ ] Selectable tags (list of tags)
-                    - [ ] labels
-                        - [ ] Selectable labels (list of labels)
+                - [x] Load from cookies
+                - [x] Filter by
+                    - [x] title
+                    - [x] tags
+                        - [ ] UI: Selectable tags (list of tags)
+                    - [x] labels
+                        - [ ] UI: Selectable labels (list of labels)
             - [x] No logging is required, so users can query `issues`
             - [x] actions
                 - [x] Add new issues: `get_issues_new`
