@@ -41,12 +41,16 @@ class IssuesFiltersModel(BaseModel):
     title: str
     tags: str
     labels: str
+    id: str
+    created_by: str
 
     @model_validator(mode='after')
     def clean_up_fields(self) -> Self:
         self.title = self.title.strip()
         self.tags = self.tags.strip()
         self.labels = self.labels.strip()
+        self.id = self.id.strip()
+        self.created_by = self.created_by.strip()
         return self
 
     @computed_field
