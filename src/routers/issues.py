@@ -67,6 +67,10 @@ async def issues_get(
             query["categories.tags"] = {'$in': filters.all_tags}
         if filters.labels:
             query["categories.labels"] = {'$in': filters.all_labels}
+        if filters.id:
+            query["_id"] = ObjectId(filters.id)
+        if filters.created_by:
+            query["created_by"] = ObjectId(filters.created_by)
 
     async with collection.find(query).sort(
         "creation_dt", pymongo.DESCENDING,
