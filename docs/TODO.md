@@ -13,9 +13,11 @@ v0.1.0
         - [ ] Issues    ;; @type {added, followed, voted}
         - [ ] Projects  ;; @type {added, followed, voted}
     - [ ] Issues
-        - [ ] Tags
-        - [ ] Labels
+        - [x] Categories
+            - [x] Tags
+            - [x] Labels
         - [ ] Votes     ;; Filter
+        - [x] CreatedBy
     - [ ] Tags
     - [ ] Labels
 

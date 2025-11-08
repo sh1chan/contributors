@@ -3,6 +3,8 @@
     - [x] Filter Issues
         - [x] Id
         - [x] createdBy
+    ;; /issues/new/`POST`
+    - [x] Remove tables `issues` fields `added_by`
 
 - [x] 07.11.2025
     ;; /issues/`GET`
