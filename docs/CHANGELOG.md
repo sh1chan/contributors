@@ -3,6 +3,9 @@
     - [x] Filter Issues
         - [x] Id
         - [x] createdBy
+    - [x] Render Template
+        - [x] `issues.id`
+        - [x] `issues.created_by`
     ;; /issues/new/`POST`
     - [x] Remove tables `issues` fields `added_by`
 
