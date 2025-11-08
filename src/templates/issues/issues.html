@@ -59,7 +59,7 @@
     <form
       action="{{ url_for('post_issues') }}"
       method="POST"
-      style="display: inline-grid;"
+      style="display: inline-grid; min-width: 200px;"
     >
       <input
         name="title"
@@ -83,6 +83,22 @@
         autocomplete="off"
         {% if filters.labels %}
         value="{{ filters.labels }}"
+        {% endif %}
+      />
+      <input
+        name="id"
+        placeholder="Filter by Id"
+        autocomplete="off"
+        {% if filters.id %}
+        value="{{ filters.id }}"
+        {% endif %}
+      />
+      <input
+        name="created_by"
+        placeholder="Filter by CreatorId"
+        autocomplete="off"
+        {% if filters.created_by %}
+        value="{{ filters.created_by }}"
         {% endif %}
       />
       <input type="submit" value="Submit Filter Query" />
