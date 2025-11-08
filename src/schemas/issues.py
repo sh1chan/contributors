@@ -22,7 +22,6 @@ class IssuesModel(BaseModel):
     # TODO (ames0k0): Remove old data
     categories: IssuesCategoriesModel | None = Field(None)
     projects: list[ObjectId] = Field([])
-    added_by: ObjectId | None = Field(None)
     created_by: ObjectId | None = Field(None)
     creation_dt: AwareDatetime
 
