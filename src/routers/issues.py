@@ -172,19 +172,14 @@ async def post_issues_new(
         "labels": form_data.all_labels,
     }
 
-    document = {
+    result = await collection.insert_one({
         "url": form_data.url,
         "title": form_data.title,
         "description": form_data.description,
         "categories": categories,
         "creation_dt": str(datetime.datetime.now(tz=datetime.UTC)),
-    }
-    if form_data.url:
-        document["added_by"] = current_user["_id"]
-    else:
-        document["created_by"] = current_user["_id"]
-
-    result = await collection.insert_one(document=document)
+        "created_by": current_user["_id"],
+    })
 
     # TODO (ames0k0): DRY
     # TODO (ames0k0): Unique categories
