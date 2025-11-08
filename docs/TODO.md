@@ -91,6 +91,8 @@ v0.1.0
                         - [ ] UI: Selectable tags (list of tags)
                     - [x] labels
                         - [ ] UI: Selectable labels (list of labels)
+                    - [x] Id
+                    - [x] createdBy
             - [x] No logging is required, so users can query `issues`
             - [x] actions
                 - [x] Add new issues: `get_issues_new`

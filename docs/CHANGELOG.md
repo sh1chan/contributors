@@ -1,6 +1,12 @@
 - [x] 07.11.2025
     ;; /issues/`GET`
     - [x] Filter Issues
+        - [x] Id
+        - [x] createdBy
+
+- [x] 07.11.2025
+    ;; /issues/`GET`
+    - [x] Filter Issues
         - [x] title
         - [x] tags
         - [x] labels
