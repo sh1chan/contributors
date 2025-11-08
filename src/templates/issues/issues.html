@@ -124,6 +124,11 @@
   <div class="issues-data">
     {% for issue in issues %}
     <div id="issues-{{ issue.id }}-data" style="display: none;">
+      <p>
+        <span>#{{ issue.id }} - Id</span>
+        <br />
+        <span>#{{ issue.created_by }} - CreatorId</span>
+      </p>
       <p><a href="{{ issue.url }}">{{ issue.url }}</a></p>
       <p>{{ issue.title }} </p>
       {% if issue.description %}
