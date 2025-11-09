@@ -98,6 +98,7 @@ v0.1.0
             - [x] No logging is required, so users can query `issues`
             - [x] actions
                 - [x] Add new issues: `get_issues_new`
+                - [x] Delete link
         - [x] `POST`
             - [x] Save user filters
             - [x] Redirect user to the `issues_get` router
@@ -123,7 +124,23 @@ v0.1.0
             - [ ] Generate a `project` for an Issues URL
     - [ ] /{id}
     - [ ] /{id}/update
-    - [ ] /{id}/delete
+    - [x] /delete/{issue_id}
+        - [x] `GET`
+            - [x] User Required
+            - [x] Permissions Required
+                - [x] User is a creator
+                    - [x] orelse Redirect user to the `issues_get` router
+                        - [x] Erorr messages
+            - [x] Render Template
+                - [x] User Required
+                - [x] Issue Form
+                    - [x] post to `post_issues_delete`
+        - [x] `POST`
+            - [x] User Required
+            - [x] Permissions Required
+                - [x] User is a creator
+                    - [x] orelse Redirect user to the `issues_get` router
+                        - [x] Erorr messages
     - [ ] /{id}/vote
 
 ### Schemas

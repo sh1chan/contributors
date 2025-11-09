@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.5 Chrome/138.0.7204.251 Electron/37.6.1 Safari/537.36" version="28.2.5" pages="2">
   <diagram name="Arch" id="UJKZjxVwBtWNaq-Kvzxa">
-    <mxGraphModel dx="611" dy="750" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="527" dy="493" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -273,7 +273,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="vnmyC39is-l4FXymyI3s-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="rV19E3cG9oeUyWE12AIr-3" target="rV19E3cG9oeUyWE12AIr-43" edge="1">
+        <mxCell id="vnmyC39is-l4FXymyI3s-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#008a00;strokeColor=default;" parent="1" source="rV19E3cG9oeUyWE12AIr-3" target="rV19E3cG9oeUyWE12AIr-43" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1860" y="140" />
@@ -281,7 +281,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="vnmyC39is-l4FXymyI3s-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="rV19E3cG9oeUyWE12AIr-3" target="rV19E3cG9oeUyWE12AIr-64" edge="1">
+        <mxCell id="vnmyC39is-l4FXymyI3s-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#008a00;strokeColor=#005700;" parent="1" source="rV19E3cG9oeUyWE12AIr-3" target="rV19E3cG9oeUyWE12AIr-64" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1860" y="140" />
@@ -458,7 +458,7 @@
         <mxCell id="rV19E3cG9oeUyWE12AIr-39" value="/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;fontColor=#ffffff;strokeColor=#FFFFFF;align=left;" parent="1" vertex="1">
           <mxGeometry x="1680" y="200" width="120" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="rV19E3cG9oeUyWE12AIr-43" value="/{id}/update" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#000000;fontColor=#ffffff;strokeColor=#6F0000;align=left;" parent="1" vertex="1">
+        <mxCell id="rV19E3cG9oeUyWE12AIr-43" value="/update/{issue_id}/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#000000;fontColor=#ffffff;strokeColor=#6F0000;align=left;" parent="1" vertex="1">
           <mxGeometry x="1680" y="260" width="120" height="20" as="geometry" />
         </mxCell>
         <mxCell id="rV19E3cG9oeUyWE12AIr-45" value="/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;fontColor=#ffffff;strokeColor=#FFFFFF;align=left;" parent="1" vertex="1">
@@ -488,7 +488,7 @@
         <mxCell id="rV19E3cG9oeUyWE12AIr-62" value="/{id}/update" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#000000;fontColor=#ffffff;strokeColor=#6F0000;align=left;" parent="1" vertex="1">
           <mxGeometry x="1480" y="260" width="120" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="rV19E3cG9oeUyWE12AIr-64" value="/{id}/delete" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#000000;fontColor=#ffffff;strokeColor=#6F0000;align=left;" parent="1" vertex="1">
+        <mxCell id="rV19E3cG9oeUyWE12AIr-64" value="/delete/{issue_id}/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#000000;fontColor=#ffffff;strokeColor=#6F0000;align=left;" parent="1" vertex="1">
           <mxGeometry x="1680" y="280" width="120" height="20" as="geometry" />
         </mxCell>
         <mxCell id="rV19E3cG9oeUyWE12AIr-65" value="/{id}/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;fontColor=#ffffff;strokeColor=#FFFFFF;align=left;" parent="1" vertex="1">

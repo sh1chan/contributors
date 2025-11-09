@@ -1,4 +1,26 @@
-- [x] 07.11.2025
+- [x] 09.11.2025
+    ;; /issues/`GET`
+    - [x] Render Template
+        - [x] Actions
+            - [x] Delete link
+    ;; /issues/delete/{issue_id}`GET`
+    - [x] User Required
+    - [x] Permissions Required
+        - [x] User is a creator
+            - [x] orelse Redirect user to the `issues_get` router
+                - [x] Erorr messages
+    - [x] Render Template
+        - [x] User Required
+        - [x] Issue Form
+            - [x] post to `post_issues_delete`
+    ;; /issues/delete/{issue_id}`POST`
+    - [x] User Required
+    - [x] Permissions Required
+        - [x] User is a creator
+            - [x] orelse Redirect user to the `issues_get` router
+                - [x] Erorr messages
+
+- [x] 08.11.2025
     ;; /issues/`GET`
     - [x] Filter Issues
         - [x] Id
