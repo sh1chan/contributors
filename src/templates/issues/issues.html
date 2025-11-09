@@ -51,10 +51,10 @@
 
 
 {% block body %}
+{% if error_message %}
+<h5 style="margin-bottom: 0px; text-align: center;">{{ error_message }}</h5>
+{% endif %}
 <div class="container" style="display: flex;">
-  {% if error_message %}
-  <h5 style="margin-bottom: 0px;">{{ error_message }}</h5>
-  {% endif %}
   <div class="filters" style="margin-top: 16px; margin-bottom: 16px;">
     <form
       action="{{ url_for('post_issues') }}"
