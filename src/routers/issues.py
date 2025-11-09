@@ -278,3 +278,45 @@ async def get_issues_delete(
     )
 
 
+@issues_router.post("/delete/{issue_id}", name="post_issues_delete")
+async def post_issues_delete(
+    issue_id: str,
+    request: Request,
+    current_user=Depends(get_current_user),
+):
+    collection = await MongoDB.collection(DBCollectionsEnum.issues)
+    db_issue = await collection.find_one({"_id": ObjectId(issue_id)})
+    if not db_issue:
+        redirect_url = request.url_for(
+            "issues_get"
+        ).include_query_params(
+            error_message="Issues Delete Failed; No Issue Found.",
+        )
+        return RedirectResponse(
+            url=redirect_url,
+            status_code=status.HTTP_303_SEE_OTHER,
+        )
+
+    db_issue = IssuesModel(**db_issue)
+    if db_issue.created_by != current_user["_id"]:
+        redirect_url = request.url_for(
+            "issues_get"
+        ).include_query_params(
+            error_message="Issues Delete Failed; Permissions Error.",
+        )
+        return RedirectResponse(
+            url=redirect_url,
+            status_code=status.HTTP_303_SEE_OTHER,
+        )
+
+    await collection.delete_one({"_id": ObjectId(issue_id)})
+
+    redirect_url = request.url_for(
+        "issues_get"
+    ).include_query_params(
+        error_message="Issues Delete Succeed.",
+    )
+    return RedirectResponse(
+        url=redirect_url,
+        status_code=status.HTTP_303_SEE_OTHER,
+    )
