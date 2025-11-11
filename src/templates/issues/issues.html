@@ -131,6 +131,7 @@
         {% if user and user.id == issue.createed_by %}
         <br />
         <a href="{{ url_for('get_issues_delete', issue_id=issue.id) }}"><button>Delete</button></a>
+        <a href="{{ url_for('get_issues_update', issue_id=issue.id) }}"><button>Update</button></a>
         {% endif %}
       </p>
       <p><a href="{{ issue.url }}">{{ issue.url }}</a></p>
