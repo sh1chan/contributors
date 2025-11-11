@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<div class="container" style="text-align: center;">
+  <div class="forms">
+    <div class="post_issues_delete">
+      <form
+        action="{{ url_for('post_issues_delete', issue_id=issue.id) }}"
+        method="POST"
+        style="display: inline-grid;"
+      >
+        <input
+          name="url"
+          placeholder="Add an issue link. e.g. Github, Gitlab, ..."
+          autocomplete="off"
+          {% if issue.url %}
+          value="{{ issue.url }}"
+          {% endif %}
+        />
+        <input
+          name="title"
+          placeholder="Add title"
+          autocomplete="off"
+          {% if issue.title %}
+          value="{{ issue.title }}"
+          {% endif %}
+          required
+        />
+        <textarea
+          name="description"
+          placeholder="Add description"
+          autocomplete="off"
+          style="min-width: 400px; min-height: 100px;"
+          {% if issue.description %}
+          value="{{ issue.description }}"
+          {% endif %}
+        ></textarea>
+        <input
+          name="tags"
+          placeholder="Add tags. e.g. linux, python"
+          autocomplete="off"
+          {% if issue.tags %}
+          value="{{ issue.tags|join(', ') }}"
+          {% endif %}
+          required
+        />
+        <input
+          name="labels"
+          placeholder="Add labels. e.g. bug, api"
+          autocomplete="off"
+          {% if issue.labels %}
+          value="{{ issue.labels|join(', ') }}"
+          {% endif %}
+        />
+        <input type="submit" value="Update Issue" />
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
