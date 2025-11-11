@@ -18,8 +18,8 @@ v0.1.0
             - [x] Labels
         - [ ] Votes     ;; Filter
         - [x] CreatedBy
-    - [ ] Tags
-    - [ ] Labels
+        - [ ] Deleted
+    - [ ] Categories
 
 ### App
 - [x] Template Files
@@ -96,9 +96,10 @@ v0.1.0
                     - [x] Id
                     - [x] createdBy
             - [x] No logging is required, so users can query `issues`
-            - [x] actions
+            - [x] Actions
                 - [x] Add new issues: `get_issues_new`
                 - [x] Delete link
+                - [x] Update link
         - [x] `POST`
             - [x] Save user filters
             - [x] Redirect user to the `issues_get` router
@@ -123,7 +124,14 @@ v0.1.0
             - [x] Add labels to the database
             - [ ] Generate a `project` for an Issues URL
     - [ ] /{id}
-    - [ ] /{id}/update
+    - [ ] /update/{issue_id}
+        - [x] `GET`
+            - [x] User Required
+            - [x] Issue Required
+            - [x] Permissions Required
+                - [x] Update
+            - [x] Render template
+                - [x] New Issues Form
     - [x] /delete/{issue_id}
         - [x] `GET`
             - [x] User Required
