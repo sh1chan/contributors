@@ -90,8 +90,8 @@ async def issues_get(
     )
 
 
-@issues_router.get("/new", name="get_issues_new")
-async def get_issues_new(
+@issues_router.get("/create", name="get_issues_create")
+async def get_issues_create(
     request: Request,
     error_message: Annotated[
         str | None,
@@ -109,8 +109,8 @@ async def get_issues_new(
     )
 
 
-@issues_router.post("/new", name="post_issues_new")
-async def post_issues_new(
+@issues_router.post("/create", name="post_issues_create")
+async def post_issues_create(
     form_data: Annotated[IssuesNewIn, Form()],
     request: Request,
     current_user=Depends(get_current_user),
@@ -128,7 +128,7 @@ async def post_issues_new(
 
         if not all((url_scheme, url_netloc, url_path)):
             redirect_url = request.url_for(
-                "get_issues_new"
+                "get_issues_create"
             ).include_query_params(
                 error_message="Issues New Failed; Not valid URL.",
             )
@@ -139,7 +139,7 @@ async def post_issues_new(
 
         if url_netloc not in IssuesSupportedURLEnum:
             redirect_url = request.url_for(
-                "get_issues_new"
+                "get_issues_create"
             ).include_query_params(
                 error_message="Issues New Failed; URL is not supported.",
             )
@@ -155,7 +155,7 @@ async def post_issues_new(
 
         if db_issue:
             redirect_url = request.url_for(
-                "get_issues_new"
+                "get_issues_create"
             ).include_query_params(
                 error_message=(
                     f"Issues New Failed; "
@@ -227,7 +227,7 @@ async def post_issues_new(
             })
 
     redirect_url = request.url_for(
-        "get_issues_new"
+        "get_issues_create"
     ).include_query_params(
         error_message=f"Issues New Succeed; (#{result.inserted_id})",
     )
