@@ -42,8 +42,8 @@
           name="tags"
           placeholder="Add tags. e.g. linux, python"
           autocomplete="off"
-          {% if issue.tags %}
-          value="{{ issue.tags|join(', ') }}"
+          {% if issue.categories.tags %}
+          value="{{ issue.categories.tags|join(', ') }}"
           {% endif %}
           readonly
         />
@@ -51,8 +51,8 @@
           name="labels"
           placeholder="Add labels. e.g. bug, api"
           autocomplete="off"
-          {% if issue.labels %}
-          value="{{ issue.labels|join(', ') }}"
+          {% if issue.categories.labels %}
+          value="{{ issue.categories.labels|join(', ') }}"
           {% endif %}
           readonly
         />
