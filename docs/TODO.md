@@ -97,13 +97,13 @@ v0.1.0
                     - [x] createdBy
             - [x] No logging is required, so users can query `issues`
             - [x] Actions
-                - [x] Add new issues: `get_issues_new`
+                - [x] Add new issues: `get_issues_create`
                 - [x] Delete link
                 - [x] Update link
         - [x] `POST`
             - [x] Save user filters
             - [x] Redirect user to the `issues_get` router
-    - [x] /new
+    - [x] /create
         - [x] `GET`
             - [x] User Required
             - [x] Render Template
@@ -118,7 +118,7 @@ v0.1.0
                         - [x] by netloc
                         - [ ] by path
                     - [ ] Gitlab
-            - [x] Redirect user to the `get_issues_new` router
+            - [x] Redirect user to the `get_issues_create` router
                 - [x] Add `error_message`
             - [x] Add tags to the database
             - [x] Add labels to the database

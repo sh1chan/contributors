@@ -1,3 +1,8 @@
+- [x] 13.11.2025
+    ;; /issues/create/`GET`
+    ;; /issues/create/`POST`
+    - [x] Rename routers `new` to `create`
+
 - [x] 11.11.2025
     ;; /issues/`GET`
     - [x] Render Template
