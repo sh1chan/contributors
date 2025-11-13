@@ -101,7 +101,7 @@ async def get_issues_create(
 ):
     return template_files.TemplateResponse(
         request=request,
-        name="issues/issues_new.html",
+        name="issues/issues_create.html",
         context={
             "user": current_user,
             "error_message": error_message,
