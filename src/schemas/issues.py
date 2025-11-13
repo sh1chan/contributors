@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from bson import ObjectId
 from pydantic import BaseModel
 from pydantic import ConfigDict
@@ -6,6 +8,7 @@ from pydantic import AnyHttpUrl
 from pydantic import AwareDatetime
 from pydantic import model_validator
 from pydantic import computed_field
+from pydantic.types import StringConstraints
 from typing_extensions import Self
 
 
@@ -73,19 +76,23 @@ class IssuesFiltersModel(BaseModel):
 
 
 class IssuesNewIn(BaseModel):
-    url: str
-    title: str
-    description: str
-    tags: str
-    labels: str
+    url: Annotated[str, StringConstraints(strip_whitespace=True)]
+    title: Annotated[
+        str, StringConstraints(strip_whitespace=True, min_length=1)
+    ]
+    description: Annotated[str, StringConstraints(strip_whitespace=True)]
+    tags: Annotated[
+        str, StringConstraints(strip_whitespace=True, min_length=1)
+    ]
+    labels: Annotated[str, StringConstraints(strip_whitespace=True)]
 
     @model_validator(mode='after')
-    def clean_up_fields(self) -> Self:
-        self.url = self.url.strip()
-        self.title = self.title.strip()
-        self.description = self.description.strip()
-        self.tags = self.tags.strip()
-        self.labels = self.labels.strip()
+    def validate_tags_and_labels(self):
+        for _ in seperate_field_values(self.tags):
+            break
+        else:
+            raise ValueError('Issue `tags` are required!')
+
         return self
 
     @computed_field
