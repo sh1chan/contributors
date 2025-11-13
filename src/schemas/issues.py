@@ -31,9 +31,18 @@ class IssuesModel(BaseModel):
 def seperate_field_values(field: str, delimiter: str = ',') -> list[str]:
     """ Returns unique field values
     """
+    values = []
+
     if not field:
-        return []
-    return list(set([v.strip().lower() for v in field.split(delimiter)]))
+        return values
+
+    for v in field.split(delimiter):
+        v = v.strip().lower()
+        if not v:
+            continue
+        values.append(v)
+
+    return list(set(values))
 
 
 class IssuesFiltersModel(BaseModel):
