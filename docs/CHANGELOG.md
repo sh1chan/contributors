@@ -1,7 +1,9 @@
 - [x] 13.11.2025
     ;; /issues/create/`GET`
+    - [x] Rename routers `new` to `create`
     ;; /issues/create/`POST`
     - [x] Rename routers `new` to `create`
+    - [x] Update schemas `IssuesNewIn`
 
 - [x] 11.11.2025
     ;; /issues/`GET`
