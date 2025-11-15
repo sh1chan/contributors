@@ -3,6 +3,9 @@
 
 {% block body %}
 <div class="container" style="text-align: center;">
+  {% if error_message %}
+  <h5>{{ error_message }}</h5>
+  {% endif %}
   <div class="forms">
     <div class="post_issues_delete">
       <form
