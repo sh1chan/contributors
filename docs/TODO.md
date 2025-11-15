@@ -126,11 +126,14 @@ v0.1.0
     - [ ] /{id}
     - [ ] /update/{issue_id}
         - [x] `GET`
+            - [x] QueryParams
+                - [x] `error_message`
             - [x] User Required
             - [x] Issue Required
             - [x] Permissions Required
                 - [x] Update
             - [x] Render template
+                - [x] `error_message`
                 - [x] New Issues Form
         - [x] `POST`
             - [x] User Required

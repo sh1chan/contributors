@@ -1,4 +1,11 @@
 - [x] 15.11.2025
+    ;; /issues/update/`GET`
+    - [x] QueryParams
+        - [x] `error_message`
+    - [x] Render Template
+        - [x] `error_message`
+
+- [x] 15.11.2025
     ;; /issues/update/`POST`
     - [x] User Required
     - [x] Validate form fields
