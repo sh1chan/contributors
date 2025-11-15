@@ -1,3 +1,20 @@
+- [x] 15.11.2025
+    ;; /issues/update/`POST`
+    - [x] User Required
+    - [x] Validate form fields
+        - [x] !Title
+        - [x] !Tags
+        - [x] Issues URL
+            - [x] Github
+                - [x] by netloc
+                - [ ] by path
+            - [ ] Gitlab
+    - [x] Redirect user to the `get_issues_update` router
+        - [x] Add `error_message`
+    - [x] Remove `issue.id` from categories
+    - [x] Add tags to the database
+    - [x] Add labels to the database
+
 - [x] 13.11.2025
     ;; /issues/create/`GET`
     - [x] Rename routers `new` to `create`

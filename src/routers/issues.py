@@ -182,8 +182,7 @@ async def post_issues_create(
     })
 
     # TODO (ames0k0): DRY
-    # TODO (ames0k0): Unique categories
-    # XXX (ames0k0): LIFO(`issues_ids`)
+    # NOTE (ames0k0): LIFO(`issues_ids`)
     for tag in categories["tags"]:
         db_ci_tag = await categories_collection.find_one({
             "identifiers": CCategoriesIdentifiersEnum.tags,
@@ -360,4 +359,168 @@ async def get_issues_update(
             "user": current_user,
             "issue": db_issue,
         }
+    )
+
+
+@issues_router.post("/update/{issue_id}", name="post_issues_update")
+async def post_issues_update(
+    form_data: Annotated[IssuesNewIn, Form()],
+    issue_id: str,
+    request: Request,
+    current_user=Depends(get_current_user),
+):
+    c_issue = await MongoDB.collection(DBCollectionsEnum.issues)
+    c_categories = await MongoDB.collection(DBCollectionsEnum.categories)
+
+    issue = await c_issue.find_one({"_id": ObjectId(issue_id)})
+    if not issue:
+        redirect_url = request.url_for(
+            "get_issues_update",
+            issue_id=issue_id,
+        ).include_query_params(
+            error_message="Issues Update Failed; No Issue Found.",
+        )
+        return RedirectResponse(
+            url=redirect_url,
+            status_code=status.HTTP_303_SEE_OTHER,
+        )
+
+    issue = IssuesModel(**issue)
+    if issue.created_by != current_user["_id"]:
+        redirect_url = request.url_for(
+            "get_issues_update",
+            issue_id=issue_id,
+        ).include_query_params(
+            error_message="Issues Update Failed; Permissions Error.",
+        )
+        return RedirectResponse(
+            url=redirect_url,
+            status_code=status.HTTP_303_SEE_OTHER,
+        )
+
+    if form_data.url:
+        parsed_url = urlparse(form_data.url)
+        url_scheme = parsed_url.scheme
+        url_netloc = parsed_url.netloc
+        url_path = parsed_url.path
+
+        if not all((url_scheme, url_netloc, url_path)):
+            redirect_url = request.url_for(
+                "get_issues_update",
+                issue_id=issue_id,
+            ).include_query_params(
+                error_message="Issues New Failed; Not valid URL.",
+            )
+            return RedirectResponse(
+                url=redirect_url,
+                status_code=status.HTTP_303_SEE_OTHER,
+            )
+
+        if url_netloc not in IssuesSupportedURLEnum:
+            redirect_url = request.url_for(
+                "get_issues_update",
+                issue_id=issue_id,
+            ).include_query_params(
+                error_message="Issues New Failed; URL is not supported.",
+            )
+            return RedirectResponse(
+                url=redirect_url,
+                status_code=status.HTTP_303_SEE_OTHER,
+            )
+
+        form_data.url = urlunparse((
+            url_scheme, url_netloc, url_path, "", "", "",
+        ))
+        issue_by_url = await c_issue.find_one({
+            "_id": {"$ne": ObjectId(issue.id)},
+            "url": form_data.url,
+        })
+        if issue_by_url:
+            redirect_url = request.url_for(
+                "get_issues_update",
+                issue_id=issue_id,
+            ).include_query_params(
+                error_message=(
+                    f"Issues New Failed; "
+                    f"URL exists (#{issue_by_url['_id']})."
+                ),
+            )
+            return RedirectResponse(
+                url=redirect_url,
+                status_code=status.HTTP_302_FOUND,
+            )
+
+    await c_categories.update_many(
+        filter={"issues_ids": issue.id},
+        update={"$pull": {"issues_ids": issue.id}}
+    )
+    # FEAT (ames0k0): Empty `issues_ids` can be deleted here
+
+    categories = {
+        "tags": form_data.all_tags,
+        "labels": form_data.all_labels,
+    }
+
+    await c_issue.update_one(
+        filter={"_id": ObjectId(issue.id)},
+        update={"$set": {
+            "url": form_data.url,
+            "title": form_data.title,
+            "description": form_data.description,
+            "categories": categories,
+        }}
+    )
+
+    # TODO (ames0k0): DRY
+    # NOTE (ames0k0): LIFO(`issues_ids`)
+    for tag in categories["tags"]:
+        db_ci_tag = await c_categories.find_one({
+            "identifiers": CCategoriesIdentifiersEnum.tags,
+            "name": tag,
+        })
+        if db_ci_tag:
+            await c_categories.update_one(
+                {"_id": ObjectId(db_ci_tag["_id"])},
+                {"$set": {
+                    "issues_ids": [
+                        issue.id,
+                    ] + db_ci_tag["issues_ids"],
+                }}
+            )
+        else:
+            await c_categories.insert_one({
+                "identifiers": CCategoriesIdentifiersEnum.tags,
+                "name": tag,
+                "issues_ids": [issue.id]
+            })
+
+    for label in categories["labels"]:
+        db_ci_label = await c_categories.find_one({
+            "identifier": CCategoriesIdentifiersEnum.labels,
+            "name": label,
+        })
+        if db_ci_label:
+            await c_categories.update_one(
+                {"_id": ObjectId(db_ci_label["_id"])},
+                {"$set": {
+                    "issues_ids": [
+                        issue.id,
+                    ] + db_ci_label["issues_ids"],
+                }}
+            )
+        else:
+            await c_categories.insert_one({
+                "identifiers": CCategoriesIdentifiersEnum.labels,
+                "name": label,
+                "issues_ids": [issue.id],
+            })
+
+    redirect_url = request.url_for(
+        "issues_get"
+    ).include_query_params(
+        error_message=f"Issues Update Succeed; (#{issue.id})",
+    )
+    return RedirectResponse(
+        url=redirect_url,
+        status_code=status.HTTP_303_SEE_OTHER,
     )
