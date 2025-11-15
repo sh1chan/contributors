@@ -325,6 +325,10 @@ async def post_issues_delete(
 async def get_issues_update(
     issue_id: str,
     request: Request,
+    error_message: Annotated[
+        str | None,
+        Query(title="Error Message"),
+    ] = None,
     current_user=Depends(get_current_user),
 ):
     collection = await MongoDB.collection(DBCollectionsEnum.issues)
@@ -358,6 +362,7 @@ async def get_issues_update(
         context={
             "user": current_user,
             "issue": db_issue,
+            "error_message": error_message,
         }
     )
 
