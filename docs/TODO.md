@@ -132,6 +132,21 @@ v0.1.0
                 - [x] Update
             - [x] Render template
                 - [x] New Issues Form
+        - [x] `POST`
+            - [x] User Required
+            - [x] Validate form fields
+                - [x] !Title
+                - [x] !Tags
+                - [x] Issues URL
+                    - [x] Github
+                        - [x] by netloc
+                        - [ ] by path
+                    - [ ] Gitlab
+            - [x] Redirect user to the `get_issues_update` router
+                - [x] Add `error_message`
+            - [x] Remove `issue.id` from categories
+            - [x] Add tags to the database
+            - [x] Add labels to the database
     - [x] /delete/{issue_id}
         - [x] `GET`
             - [x] User Required
