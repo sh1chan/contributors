@@ -409,7 +409,7 @@ async def post_issues_update(
                 "get_issues_update",
                 issue_id=issue_id,
             ).include_query_params(
-                error_message="Issues New Failed; Not valid URL.",
+                error_message="Issues Update Failed; Not valid URL.",
             )
             return RedirectResponse(
                 url=redirect_url,
@@ -421,7 +421,7 @@ async def post_issues_update(
                 "get_issues_update",
                 issue_id=issue_id,
             ).include_query_params(
-                error_message="Issues New Failed; URL is not supported.",
+                error_message="Issues Update Failed; URL is not supported.",
             )
             return RedirectResponse(
                 url=redirect_url,
@@ -441,7 +441,7 @@ async def post_issues_update(
                 issue_id=issue_id,
             ).include_query_params(
                 error_message=(
-                    f"Issues New Failed; "
+                    f"Issues Update Failed; "
                     f"URL exists (#{issue_by_url['_id']})."
                 ),
             )
