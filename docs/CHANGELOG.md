@@ -1,4 +1,16 @@
 - [x] 15.11.2025
+    ;; /auth/`GET`
+    - [x] Rename routers
+        - [x] `login_post` to `post_login`
+        - [x] `login_get` to `get_login`
+        - [x] `register_post` to `post_register`
+        - [x] `register_get` to `get_register`
+    - [x] Updated template files
+        - [x] `base.html`
+        - [x] `register.html`
+        - [x] `login.html`
+
+- [x] 15.11.2025
     ;; /issues/update/`GET`
     - [x] QueryParams
         - [x] `error_message`
