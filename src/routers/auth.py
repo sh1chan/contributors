@@ -194,8 +194,8 @@ async def get_login(
     )
 
 
-@auth_router.post("/login", name="login_post")
-async def login_post(
+@auth_router.post("/login", name="post_login")
+async def post_login(
     request: Request,
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
 ):
