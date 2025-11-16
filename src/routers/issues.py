@@ -381,7 +381,6 @@ async def post_issues_update(
     if not issue:
         redirect_url = request.url_for(
             "issues_get",
-            issue_id=issue_id,
         ).include_query_params(
             error_message="Issues Update Failed; No Issue Found.",
         )
@@ -394,7 +393,6 @@ async def post_issues_update(
     if issue.created_by != current_user["_id"]:
         redirect_url = request.url_for(
             "issues_get",
-            issue_id=issue_id,
         ).include_query_params(
             error_message="Issues Update Failed; Permissions Error.",
         )
