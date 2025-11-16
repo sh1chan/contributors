@@ -112,8 +112,8 @@ async def get_current_user(
     return db_user
 
 
-@auth_router.get("/register", name="register_get")
-async def register_get(
+@auth_router.get("/register", name="get_register")
+async def get_register(
     request: Request,
     error_message: Annotated[
         str | None,
@@ -129,8 +129,8 @@ async def register_get(
     )
 
 
-@auth_router.post("/register", name="register_post")
-async def register_post(
+@auth_router.post("/register", name="post_register")
+async def post_register(
     request: Request,
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
 ):
@@ -141,7 +141,7 @@ async def register_post(
 
     if not all((username, password)):
         redirect_url = request.url_for(
-            "register_get"
+            "get_register"
         ).include_query_params(
             error_message="Register Failed; Credentials are required.",
         )
@@ -155,7 +155,7 @@ async def register_post(
 
     if db_user:
         redirect_url = request.url_for(
-            "register_get"
+            "get_register"
         ).include_query_params(
             error_message="Register Failed; Username must be unique.",
         )
@@ -172,13 +172,13 @@ async def register_post(
     )
 
     return RedirectResponse(
-        url=request.url_for("login_get"),
+        url=request.url_for("get_login"),
         status_code=status.HTTP_302_FOUND,
     )
 
 
-@auth_router.get("/login", name="login_get")
-async def login_get(
+@auth_router.get("/login", name="get_login")
+async def get_login(
     request: Request,
     error_message: Annotated[
         str | None,
@@ -194,15 +194,15 @@ async def login_get(
     )
 
 
-@auth_router.post("/login", name="login_post")
-async def login_post(
+@auth_router.post("/login", name="post_login")
+async def post_login(
     request: Request,
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
 ):
     """
     """
     redirect_url = request.url_for(
-        "login_get"
+        "get_login"
     ).include_query_params(
         error_message="Login Failed; Invalid credentials.",
     )
