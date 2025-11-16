@@ -102,7 +102,7 @@ v0.1.0
                 - [x] Update link
         - [x] `POST`
             - [x] Save user filters
-            - [x] Redirect user to the `issues_get` router
+            - [x] Redirect user to the `get_issues` router
     - [x] /create
         - [x] `GET`
             - [x] User Required
@@ -134,7 +134,7 @@ v0.1.0
                 - [x] Update
             - [x] Redirect
                 - [x] on premmision error
-                    - [x] router `issues_get`
+                    - [x] router `get_issues`
                 - [x] Add `error_message`
             - [x] Render template
                 - [x] `error_message`
@@ -151,7 +151,7 @@ v0.1.0
                     - [ ] Gitlab
             - [x] Redirect
                 - [x] on permission error
-                    - [x] router `issues_get`
+                    - [x] router `get_issues`
                 - [x] on validation error
                     - [x] router `get_issues_update`
                 - [x] on success
@@ -165,7 +165,7 @@ v0.1.0
             - [x] User Required
             - [x] Permissions Required
                 - [x] User is a creator
-                    - [x] orelse Redirect user to the `issues_get` router
+                    - [x] orelse Redirect user to the `get_issues` router
                         - [x] Erorr messages
             - [x] Render Template
                 - [x] User Required
@@ -175,7 +175,7 @@ v0.1.0
             - [x] User Required
             - [x] Permissions Required
                 - [x] User is a creator
-                    - [x] orelse Redirect user to the `issues_get` router
+                    - [x] orelse Redirect user to the `get_issues` router
                         - [x] Erorr messages
     - [ ] /{id}/vote
 

@@ -239,7 +239,7 @@ async def login_post(
     )
 
     response = RedirectResponse(
-        url=request.url_for("issues_get"),
+        url=request.url_for("get_issues"),
         status_code=status.HTTP_302_FOUND,
     )
     response.set_cookie(CookiesKeysEnum.access_token, access_token)
@@ -253,7 +253,7 @@ async def logout_get(
     _=Depends(get_current_user)
 ):
     response = RedirectResponse(
-        url=request.url_for("issues_get"),
+        url=request.url_for("get_issues"),
         status_code=status.HTTP_302_FOUND,
     )
     response.delete_cookie(CookiesKeysEnum.access_token)
