@@ -37,7 +37,7 @@ async def post_issues(
     """ Saves filters in the cookies
     """
     response = RedirectResponse(
-        url=request.url_for("issues_get"),
+        url=request.url_for("get_issues_get"),
         status_code=status.HTTP_302_FOUND,
     )
     response.set_cookie(CookiesKeysEnum.filters, form_data.model_dump_json())
@@ -45,8 +45,8 @@ async def post_issues(
     return response
 
 
-@issues_router.get("/", name="issues_get")
-async def issues_get(
+@issues_router.get("/", name="get_issues_get")
+async def get_issues_get(
     request: Request,
     error_message: Annotated[
         str | None,
@@ -246,7 +246,7 @@ async def get_issues_delete(
     db_issue = await collection.find_one({"_id": ObjectId(issue_id)})
     if not db_issue:
         redirect_url = request.url_for(
-            "issues_get"
+            "get_issues_get"
         ).include_query_params(
             error_message="Issues Delete Failed; No Issue Found.",
         )
@@ -258,7 +258,7 @@ async def get_issues_delete(
     db_issue = IssuesModel(**db_issue)
     if db_issue.created_by != current_user["_id"]:
         redirect_url = request.url_for(
-            "issues_get"
+            "get_issues_get"
         ).include_query_params(
             error_message="Issues Delete Failed; Permissions Error.",
         )
@@ -287,7 +287,7 @@ async def post_issues_delete(
     db_issue = await collection.find_one({"_id": ObjectId(issue_id)})
     if not db_issue:
         redirect_url = request.url_for(
-            "issues_get"
+            "get_issues_get"
         ).include_query_params(
             error_message="Issues Delete Failed; No Issue Found.",
         )
@@ -299,7 +299,7 @@ async def post_issues_delete(
     db_issue = IssuesModel(**db_issue)
     if db_issue.created_by != current_user["_id"]:
         redirect_url = request.url_for(
-            "issues_get"
+            "get_issues_get"
         ).include_query_params(
             error_message="Issues Delete Failed; Permissions Error.",
         )
@@ -311,7 +311,7 @@ async def post_issues_delete(
     await collection.delete_one({"_id": ObjectId(issue_id)})
 
     redirect_url = request.url_for(
-        "issues_get"
+        "get_issues_get"
     ).include_query_params(
         error_message="Issues Delete Succeed.",
     )
@@ -335,7 +335,7 @@ async def get_issues_update(
     db_issue = await collection.find_one({"_id": ObjectId(issue_id)})
     if not db_issue:
         redirect_url = request.url_for(
-            "issues_get"
+            "get_issues_get"
         ).include_query_params(
             error_message="Issues Update Failed; No Issue Found.",
         )
@@ -347,7 +347,7 @@ async def get_issues_update(
     db_issue = IssuesModel(**db_issue)
     if db_issue.created_by != current_user["_id"]:
         redirect_url = request.url_for(
-            "issues_get"
+            "get_issues_get"
         ).include_query_params(
             error_message="Issues Update Failed; Permissions Error.",
         )
@@ -380,7 +380,7 @@ async def post_issues_update(
     issue = await c_issue.find_one({"_id": ObjectId(issue_id)})
     if not issue:
         redirect_url = request.url_for(
-            "issues_get",
+            "get_issues_get",
         ).include_query_params(
             error_message="Issues Update Failed; No Issue Found.",
         )
@@ -392,7 +392,7 @@ async def post_issues_update(
     issue = IssuesModel(**issue)
     if issue.created_by != current_user["_id"]:
         redirect_url = request.url_for(
-            "issues_get",
+            "get_issues_get",
         ).include_query_params(
             error_message="Issues Update Failed; Permissions Error.",
         )
