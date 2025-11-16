@@ -172,13 +172,13 @@ async def post_register(
     )
 
     return RedirectResponse(
-        url=request.url_for("login_get"),
+        url=request.url_for("get_login"),
         status_code=status.HTTP_302_FOUND,
     )
 
 
-@auth_router.get("/login", name="login_get")
-async def login_get(
+@auth_router.get("/login", name="get_login")
+async def get_login(
     request: Request,
     error_message: Annotated[
         str | None,
@@ -202,7 +202,7 @@ async def login_post(
     """
     """
     redirect_url = request.url_for(
-        "login_get"
+        "get_login"
     ).include_query_params(
         error_message="Login Failed; Invalid credentials.",
     )
