@@ -112,8 +112,8 @@ async def get_current_user(
     return db_user
 
 
-@auth_router.get("/register", name="register_get")
-async def register_get(
+@auth_router.get("/register", name="get_register")
+async def get_register(
     request: Request,
     error_message: Annotated[
         str | None,
@@ -141,7 +141,7 @@ async def register_post(
 
     if not all((username, password)):
         redirect_url = request.url_for(
-            "register_get"
+            "get_register"
         ).include_query_params(
             error_message="Register Failed; Credentials are required.",
         )
@@ -155,7 +155,7 @@ async def register_post(
 
     if db_user:
         redirect_url = request.url_for(
-            "register_get"
+            "get_register"
         ).include_query_params(
             error_message="Register Failed; Username must be unique.",
         )
