@@ -29,8 +29,8 @@ from src.schemas.issues import IssuesFiltersModel
 issues_router = APIRouter(prefix="/issues", tags=["issues"])
 
 
-@issues_router.post("/", name="post_issues")
-async def post_issues(
+@issues_router.post("/", name="post_issues_filters")
+async def post_issues_filters(
     form_data: Annotated[IssuesFiltersModel, Form()],
     request: Request,
 ):
