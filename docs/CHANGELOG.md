@@ -4,22 +4,24 @@
         - [x] `error_message`
     - [x] Redirect
         - [x] on premmision error
-            - [x] router `get_issues_get`
+            - [x] router `get_issues`
         - [x] Add `error_message`
     - [x] Render Template
         - [x] `error_message`
     ;; /issues/update/`GET`
     - [x] Redirect
         - [x] on premmision error
-            - [x] router `get_issues_get`
+            - [x] router `get_issues`
         - [x] on validation error
             - [x] router `get_issues_update`
         - [x] on success
             - [x] router `get_issues_update`
         - [x] Add `error_message`
     ;; /issues/`GET`
-    - [x] Rename routers `get_issues` to `get_issues_get`
+    - [x] Rename routers `issues_get` to `get_issues`
         - [x] Updated routers and template files
+    ;; /issues/`POST`
+    - [x] Rename routers `post_issues` to `post_issues_filters`
 
 - [x] 15.11.2025
     ;; /issues/update/`POST`
@@ -32,7 +34,7 @@
                 - [x] by netloc
                 - [ ] by path
             - [ ] Gitlab
-    - [x] Redirect user to the `get_issues_get` router
+    - [x] Redirect user to the `get_issues` router
         - [x] Add `error_message`
     - [x] Remove `issue.id` from categories
     - [x] Add tags to the database
@@ -67,7 +69,7 @@
     - [x] User Required
     - [x] Permissions Required
         - [x] User is a creator
-            - [x] orelse Redirect user to the `get_issues_get` router
+            - [x] orelse Redirect user to the `get_issues` router
                 - [x] Erorr messages
     - [x] Render Template
         - [x] User Required
@@ -77,7 +79,7 @@
     - [x] User Required
     - [x] Permissions Required
         - [x] User is a creator
-            - [x] orelse Redirect user to the `get_issues_get` router
+            - [x] orelse Redirect user to the `get_issues` router
                 - [x] Erorr messages
 
 - [x] 08.11.2025
@@ -99,7 +101,7 @@
         - [x] labels
     ;; /issues/`POST`
     - [x] Save user filters
-    - [x] Redirect user to the `get_issues_get` router
+    - [x] Redirect user to the `get_issues` router
     ;; /issues/new/`POST`
     - [x] Add tags to the database
     - [x] Add labels to the database
