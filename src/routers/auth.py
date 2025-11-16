@@ -129,8 +129,8 @@ async def get_register(
     )
 
 
-@auth_router.post("/register", name="register_post")
-async def register_post(
+@auth_router.post("/register", name="post_register")
+async def post_register(
     request: Request,
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
 ):
