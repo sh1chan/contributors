@@ -2,8 +2,21 @@
     ;; /issues/update/`GET`
     - [x] QueryParams
         - [x] `error_message`
+    - [x] Redirect
+        - [x] on premmision error
+            - [x] router `issues_get`
+        - [x] Add `error_message`
     - [x] Render Template
         - [x] `error_message`
+    ;; /issues/update/`GET`
+    - [x] Redirect
+        - [x] on premmision error
+            - [x] router `issues_get`
+        - [x] on validation error
+            - [x] router `get_issues_update`
+        - [x] on success
+            - [x] router `get_issues_update`
+        - [x] Add `error_message`
 
 - [x] 15.11.2025
     ;; /issues/update/`POST`
@@ -16,7 +29,7 @@
                 - [x] by netloc
                 - [ ] by path
             - [ ] Gitlab
-    - [x] Redirect user to the `get_issues_update` router
+    - [x] Redirect user to the `issues_get` router
         - [x] Add `error_message`
     - [x] Remove `issue.id` from categories
     - [x] Add tags to the database

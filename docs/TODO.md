@@ -132,6 +132,10 @@ v0.1.0
             - [x] Issue Required
             - [x] Permissions Required
                 - [x] Update
+            - [x] Redirect
+                - [x] on premmision error
+                    - [x] router `issues_get`
+                - [x] Add `error_message`
             - [x] Render template
                 - [x] `error_message`
                 - [x] New Issues Form
@@ -145,7 +149,13 @@ v0.1.0
                         - [x] by netloc
                         - [ ] by path
                     - [ ] Gitlab
-            - [x] Redirect user to the `get_issues_update` router
+            - [x] Redirect
+                - [x] on permission error
+                    - [x] router `issues_get`
+                - [x] on validation error
+                    - [x] router `get_issues_update`
+                - [x] on success
+                    - [x] router `get_issues_update`
                 - [x] Add `error_message`
             - [x] Remove `issue.id` from categories
             - [x] Add tags to the database
