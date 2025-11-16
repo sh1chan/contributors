@@ -337,7 +337,7 @@ async def get_issues_update(
         redirect_url = request.url_for(
             "issues_get"
         ).include_query_params(
-            error_message="Issues Delete Failed; No Issue Found.",
+            error_message="Issues Update Failed; No Issue Found.",
         )
         return RedirectResponse(
             url=redirect_url,
@@ -349,7 +349,7 @@ async def get_issues_update(
         redirect_url = request.url_for(
             "issues_get"
         ).include_query_params(
-            error_message="Issues Delete Failed; Permissions Error.",
+            error_message="Issues Update Failed; Permissions Error.",
         )
         return RedirectResponse(
             url=redirect_url,
@@ -380,7 +380,7 @@ async def post_issues_update(
     issue = await c_issue.find_one({"_id": ObjectId(issue_id)})
     if not issue:
         redirect_url = request.url_for(
-            "get_issues_update",
+            "issues_get",
             issue_id=issue_id,
         ).include_query_params(
             error_message="Issues Update Failed; No Issue Found.",
@@ -393,7 +393,7 @@ async def post_issues_update(
     issue = IssuesModel(**issue)
     if issue.created_by != current_user["_id"]:
         redirect_url = request.url_for(
-            "get_issues_update",
+            "issues_get",
             issue_id=issue_id,
         ).include_query_params(
             error_message="Issues Update Failed; Permissions Error.",
@@ -521,7 +521,8 @@ async def post_issues_update(
             })
 
     redirect_url = request.url_for(
-        "issues_get"
+        "get_issues_update",
+        issue_id=issue_id,
     ).include_query_params(
         error_message=f"Issues Update Succeed; (#{issue.id})",
     )
