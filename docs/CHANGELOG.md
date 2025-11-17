@@ -9,6 +9,11 @@
         - [x] `base.html`
         - [x] `register.html`
         - [x] `login.html`
+    ;; /auth/`GET`
+    - [x] Updated dependencies `get_current_user`
+        - [x] raises `InvalidCredentialsException`
+    ;; [core]
+    - [x] Added exception handlers `exception_handler_ice`
 
 - [x] 15.11.2025
     ;; /issues/update/`GET`

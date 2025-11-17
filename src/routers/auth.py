@@ -14,7 +14,6 @@ from fastapi import Cookie
 from fastapi import status
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import RedirectResponse
-from fastapi.exceptions import HTTPException
 
 from src.core.app import template_files
 from src.core.db import MongoDB
@@ -22,6 +21,7 @@ from src.core.db import DBCollectionsEnum
 from src.core.config import Secret
 from src.core.enums import CookiesKeysEnum
 from src.schemas.auth import TokenData
+from src.exceptions.auth import InvalidCredentialsException
 
 
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
@@ -84,13 +84,8 @@ async def get_optional_current_user(
 async def get_current_user(
     access_token: Annotated[str | None, Cookie()] = None,
 ):
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
     if not access_token:
-        raise credentials_exception
+        raise InvalidCredentialsException
     try:
         payload = jwt.decode(
             access_token,
@@ -99,15 +94,15 @@ async def get_current_user(
         )
         username = payload.get("sub")
         if username is None:
-            raise credentials_exception
+            raise InvalidCredentialsException
         token_data = TokenData(username=username)
     except jwt.exceptions.InvalidTokenError:
-        raise credentials_exception
+        raise InvalidCredentialsException
 
     collection = await MongoDB.collection(DBCollectionsEnum.users)
     db_user = await collection.find_one({"username": token_data.username})
     if db_user is None:
-        raise credentials_exception
+        raise InvalidCredentialsException
 
     return db_user
 
