@@ -111,7 +111,7 @@
       <li onclick="openIssuesData(this, '{{ issue.id }}');">
         {{ issue.title }}</br>
         {% for tag in issue.categories.tags %}
-        {% if user and tag in user.tags %}
+        {% if user and tag in user['tags'] %}
         <span class="tag-hl">#{{ tag }}</span>
         {% else %}
         <span class="tag-hl">#{{ tag }}</span>
@@ -128,7 +128,7 @@
         <span>#{{ issue.id }} - Id</span>
         <br />
         <span>#{{ issue.created_by }} - CreatorId</span>
-        {% if user and user.id == issue.createed_by %}
+        {% if user and user['_id'] == issue.created_by %}
         <br />
         <a href="{{ url_for('get_issues_delete', issue_id=issue.id) }}"><button>Delete</button></a>
         <a href="{{ url_for('get_issues_update', issue_id=issue.id) }}"><button>Update</button></a>
@@ -141,7 +141,7 @@
       {% endif %}
       <p>
         {% for tag in issue.categories.tags %}
-        {% if user and tag in user.tags %}
+        {% if user and tag in user['tags'] %}
         <span class="tag-hl">#{{ tag }}</span>
         {% else %}
         <span class="tag-hl">#{{ tag }}</span>
