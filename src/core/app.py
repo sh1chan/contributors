@@ -32,7 +32,7 @@ async def exception_handler_ice(
     )
     return RedirectResponse(
         url=redirect_url,
-        status_code=status.HTTP_307_TEMPORARY_REDIRECT,
+        status_code=status.HTTP_303_SEE_OTHER,
     )
 
 
